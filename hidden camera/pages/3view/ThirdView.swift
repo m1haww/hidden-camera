@@ -1,13 +1,18 @@
 import SwiftUI
 
 struct ThirdView: View {
+    @State private var showIndoorGuide = false
+    @State private var showOutdoorGuide = false
+    
     var body: some View {
         ZStack { // Use ZStack for main background
             Color.customBackground.edgesIgnoringSafeArea(.all) // Set custom background color for the whole view
 
             VStack(spacing: 20) {
-                // Indoor Places Card wrapped in NavigationLink
-                NavigationLink(destination: IndoorGuideDetailView()) {
+                // Indoor Places Card
+                Button {
+                    showIndoorGuide = true
+                } label: {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             // Indoor Icon (Placeholder - replace with your asset if needed)
@@ -42,8 +47,10 @@ struct ThirdView: View {
                 }
                 .buttonStyle(PlainButtonStyle()) // Remove default button styling
                 
-                // Outdoor Places Card wrapped in NavigationLink
-                NavigationLink(destination: OutdoorGuideDetailView()) {
+                // Outdoor Places Card
+                Button {
+                    showOutdoorGuide = true
+                } label: {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             // Outdoor Icon (Placeholder - replace with your asset if needed)
@@ -101,6 +108,16 @@ struct ThirdView: View {
                     Image(systemName: "hexagon.fill") // System image for a filled hexagon
                         .foregroundColor(.customButton) // Apply custom color
                 }
+            }
+        }
+        .sheet(isPresented: $showIndoorGuide) {
+            NavigationView {
+                IndoorGuideDetailView()
+            }
+        }
+        .sheet(isPresented: $showOutdoorGuide) {
+            NavigationView {
+                OutdoorGuideDetailView()
             }
         }
     }

@@ -1,4 +1,12 @@
 import SwiftUI
+import hidden_camera // Import the module containing ScanNavigationDestination
+
+// Define navigation destinations for the Scan tab
+// Moved to AppNavigation.swift
+// enum ScanNavigationDestination: Hashable {
+//     case scanResultDetail
+//     case scanningProgress(deviceType: String)
+// }
 
 struct FirstView: View {
     // State variable to hold the scan percentage (0.0 to 1.0)
@@ -7,29 +15,28 @@ struct FirstView: View {
     @State private var isScanningActive: Bool = false
     // Binding to control the presentation of the scan result alert (now owned by ContentView)
     @Binding var showAlert: Bool
-    // State variable to control navigation to the scan result detail view
-    @State private var shouldNavigateToResult: Bool = false
+    // Binding to the navigation path managed by the parent view (ContentView)
+    @Binding var navigationPath: NavigationPath
+    // State variable to hold the type of scan that was just completed
+    @State private var lastCompletedScanType: String = "Wi-Fi" // Default or initial type
     
     var body: some View {
-        // Use a NavigationLink that activates based on shouldNavigateToResult
-        NavigationLink(
-            destination: ScanResultDetailView(), // The view to navigate to
-            isActive: $shouldNavigateToResult // Controls when navigation happens
-        ) { EmptyView() } // Invisible label
-        .hidden() // Hide the default appearance of the NavigationLink
+        // The NavigationStack is now in ContentView
+        // We no longer need a NavigationLink here
         
         ZStack { // Use ZStack for main background
             Color.customBackground.edgesIgnoringSafeArea(.all) // Set custom background color for the whole view
 
             VStack(spacing: 25) { // Slightly increased spacing
                 
-                // Connection Info Section
+                // Connection Info Section/
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Connection Type")
                             .foregroundColor(.gray)
                         Spacer()
-                        Text("Wi-Fi")
+                        // This text could dynamically show the type being scanned
+                        Text("Wi-Fi") // Assuming Wi-Fi for now based on UI
                             .foregroundColor(.customText)
                     }
                     Divider() // A thin line separator
@@ -48,7 +55,7 @@ struct FirstView: View {
                 .cornerRadius(8) // Slightly smaller corner radius
                 
                 // Circular Scanning Element with Progress
-                VStack(spacing: 15) { // Slightly increased spacing
+                VStack(spacing: 15) {
                     ZStack {
                         // Inner Circle Background (using customBackground)
                         Circle()
@@ -106,6 +113,9 @@ struct FirstView: View {
                          isScanningActive = true
                          scanProgress = 0.0 // Ensure progress starts from 0
                          
+                         // Simulate setting the scanned type - in a real app, this would come from scan results
+                         self.lastCompletedScanType = "Wi-Fi" // Assuming Wi-Fi for this button's primary action
+
                          // In a real app, start your scan process here and update scanProgress periodically
                          // For demo, we'll simulate progress update:
                          Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
@@ -138,6 +148,7 @@ struct FirstView: View {
             .padding(.top)
         }
         .navigationTitle("Scan")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
@@ -157,18 +168,30 @@ struct FirstView: View {
             }
         }
         // Present the custom alert as an overlay
-        .overlay(
-            Group {
-                if showAlert {
-                    // Pass the closure to trigger navigation
-                    ScanResultView(isPresented: $showAlert, onNavigateToResult: { self.shouldNavigateToResult = true })
-                }
+//        .overlay(
+//            Group {
+//                if showAlert {
+//                    // Present ScanResultView from here and pass the scanned device type
+////                    ScanResultView(isPresented: $showAlert, navigationPath: $navigationPath, scannedDeviceType: lastCompletedScanType)
+//                    Text("Hell world")
+//                }
+//            }
+//        )
+        // Define the navigation destination using the binding
+        .navigationDestination(for: ScanNavigationDestination.self) { destination in
+            switch destination {
+            case .scanResultDetail:
+                ScanResultDetailView()
+            case .scanningProgress(let deviceType):
+                ScanningProgressView(deviceType: deviceType)
             }
-        )
+        }
     }
 }
 
 #Preview {
-    // Need to provide a constant binding for the preview
-    FirstView(showAlert: .constant(false))
+    // Need to provide a constant binding for showAlert and navigationPath for the preview and wrap in NavigationStack
+    NavigationStack {
+        FirstView(showAlert: .constant(false), navigationPath: .constant(NavigationPath()))
+    }
 }

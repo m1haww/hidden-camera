@@ -1,9 +1,12 @@
 import SwiftUI
+import hidden_camera // Import the module containing ScanNavigationDestination
 
 struct ScanResultView: View {
     @Binding var isPresented: Bool // Binding to control the visibility of this view
-    // Closure to be called when navigation should occur
-    var onNavigateToResult: (() -> Void)?
+    // Binding to the navigation path in the parent view
+    @Binding var navigationPath: NavigationPath
+    // The type of scan that was just completed, passed from the parent view
+    let scannedDeviceType: String
     
     // You would pass the actual scan results to this view
     var totalDevices: Int = 7 // Placeholder
@@ -102,7 +105,7 @@ struct ScanResultView: View {
                 Button {
                     // Action for See scanning result
                     isPresented = false // Dismiss the alert
-                    onNavigateToResult?() // Call the closure to trigger navigation
+                    navigationPath.append(ScanNavigationDestination.scanResultDetail) // Append to the navigation path
                     // You would likely pass scan results data to the detail view here
                 } label: {
                     Text("See scanning result")
@@ -117,8 +120,8 @@ struct ScanResultView: View {
                 Button {
                     // Action for Rescan
                     isPresented = false // Dismiss the alert
-                    // Trigger a rescan in FirstView
-                    // You might need a way to communicate back to FirstView, e.g., using a closure or a shared observable object
+                    // Append the scanning progress destination with the scanned device type
+                    navigationPath.append(ScanNavigationDestination.scanningProgress(deviceType: scannedDeviceType))
                 } label: {
                     Text("Rescan")
                         .font(.headline)
@@ -142,7 +145,7 @@ struct ScanResultView: View {
 
 struct ScanResultView_Previews: PreviewProvider {
     static var previews: some View {
-        // Need to provide a constant binding for the preview and nil for the closure
-        ScanResultView(isPresented: .constant(true), onNavigateToResult: nil)
+        // Need to provide constant bindings for the preview and a placeholder device type
+        ScanResultView(isPresented: .constant(true), navigationPath: .constant(NavigationPath()), scannedDeviceType: "Wi-Fi")
     }
-} 
+}
