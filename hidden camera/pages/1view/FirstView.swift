@@ -21,7 +21,7 @@ struct FirstView: View {
                         
                         Spacer()
                         
-                        Text(lastCompletedScanType)
+                        Text(deviceInfoProvider.geoIPInfo?.mobile ?? false ? "Cellular" : "Wi-Fi")
                             .foregroundColor(.customText)
                     }
                     Divider()
@@ -34,8 +34,8 @@ struct FirstView: View {
                         if let error = deviceInfoProvider.error {
                             Text("Error: \(error.localizedDescription)")
                                 .foregroundColor(.red)
-                        } else if let ipInfo = deviceInfoProvider.ipInfo {
-                            Text("\(ipInfo.ip)")
+                        } else if let ipInfo = deviceInfoProvider.geoIPInfo?.query {
+                            Text("\(ipInfo)")
                         } else {
                             Text("No IP Info Available")
                         }

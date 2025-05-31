@@ -1,18 +1,22 @@
 import Foundation
 
-struct IPInfo: Decodable {
-    let ip: String
+struct GeoIPInfo: Decodable {
+    let query: String
+    let mobile: Bool
 }
 
 final class DeviceInfoProvider: ObservableObject {
-    @Published var ipInfo: IPInfo? = nil
+    @Published var geoIPInfo: GeoIPInfo? = nil
     @Published var error: Error? = nil
     
     static let shared = DeviceInfoProvider()
     
-    private let apiURL = URL(string: "https://api.ipify.org/?format=json")!
-    
     func fetchIPInfo() async {
+        guard let apiURL = URL(string: "http://ip-api.com/json?fields=status,message,query,country,city,mobile") else {
+            print("Invalid API URL.")
+            return
+        }
+        
         do {
             let (data, response) = try await URLSession.shared.data(from: apiURL)
             
@@ -20,10 +24,10 @@ final class DeviceInfoProvider: ObservableObject {
                 throw URLError(.badServerResponse)
             }
             
-            let decodedInfo = try JSONDecoder().decode(IPInfo.self, from: data)
+            let decodedInfo = try JSONDecoder().decode(GeoIPInfo.self, from: data)
             
             DispatchQueue.main.async {
-                self.ipInfo = decodedInfo
+                self.geoIPInfo = decodedInfo
             }
         } catch {
             print("Error fetching api info: \(error)")
