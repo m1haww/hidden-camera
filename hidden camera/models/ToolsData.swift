@@ -5,10 +5,7 @@ struct ToolItem: Identifiable, Decodable {
     let title: String
     let description: String
     let imageName: String
-    // Add specific properties for each tool type if needed
-    // For Blinking Devices Scanner
     var filterOptions: [String]?
-    // For Compass Visual
     var signalDescription: String?
 }
 

@@ -17,7 +17,6 @@ struct GuideItem: Identifiable, Decodable {
         title = try container.decode(String.self, forKey: .title)
         description = try container.decode(String.self, forKey: .description)
         imageName = try container.decode(String.self, forKey: .imageName)
-        // Generate a new UUID for the id after decoding
         id = UUID()
     }
 }

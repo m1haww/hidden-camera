@@ -1,8 +1,8 @@
 import Foundation
 import SwiftUI
 
-// Define navigation destinations for the Scan tab
-enum ScanNavigationDestination: Hashable {
+enum NavigationDestination: Hashable {
     case scanResultDetail
-    case scanningProgress(deviceType: String)
+    case wifiDeviceDetail(device: WiFiDevice)
+    case bluetoothDeviceDetail(device: Peripheral)
 }

@@ -95,7 +95,6 @@ struct ThirdView: View {
         .toolbar { // Add toolbar items (like AppBar actions)
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    // Action for refresh button
                 } label: {
                     Image(systemName: "arrow.clockwise") // System image for refresh
                         .foregroundColor(.customButton) // Apply custom color
@@ -103,7 +102,7 @@ struct ThirdView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    // Action for the hexagon button
+                    
                 } label: {
                     Image(systemName: "hexagon.fill") // System image for a filled hexagon
                         .foregroundColor(.customButton) // Apply custom color
@@ -122,10 +121,3 @@ struct ThirdView: View {
         }
     }
 }
-
-#Preview {
-    // Need to embed in a NavigationView to preview the title and toolbar
-    NavigationView {
-        ThirdView()
-    }
-} 

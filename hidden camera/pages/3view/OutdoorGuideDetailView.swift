@@ -4,30 +4,29 @@ struct OutdoorGuideDetailView: View {
     let outdoorGuideItems: [GuideItem]
 
     init() {
-        // Decode the JSON data when the view is initialized
         let decoder = JSONDecoder()
         do {
             let guideData = try decoder.decode(GuideData.self, from: jsonData.data(using: .utf8)!)
             outdoorGuideItems = guideData.outdoor
         } catch {
             print("Failed to decode outdoor guide data: \(error)")
-            outdoorGuideItems = [] // Initialize with empty array on error
+            outdoorGuideItems = []
         }
     }
 
     var body: some View {
-        ZStack { // Use ZStack for main background
-            Color.customBackground.edgesIgnoringSafeArea(.all) // Set custom background color for the whole view
-
-            ScrollView { // Use ScrollView to make the content scrollable
-                VStack(spacing: 20) { // Use VStack for vertical layout
+        ZStack {
+            Color.customBackground.edgesIgnoringSafeArea(.all)
+            
+            ScrollView {
+                VStack(spacing: 20) {
                     ForEach(outdoorGuideItems) { item in
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
                                 Image(systemName: item.imageName)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 30, height: 30) // Adjust size as needed
+                                    .frame(width: 30, height: 30)
                                     .foregroundColor(.customButton)
 
                                 Text(item.title)
@@ -40,26 +39,18 @@ struct OutdoorGuideDetailView: View {
                             Text(item.description)
                                 .font(.caption)
                                 .foregroundColor(.gray)
-                                .lineLimit(nil) // Allow multiple lines for description
+                                .lineLimit(nil)
                         }
                         .padding()
-                        .background(Color(hex: "1c2021")) // Background color for each item card
-                        .cornerRadius(12) // Rounded corners for the item card
+                        .background(Color(hex: "1c2021"))
+                        .cornerRadius(12)
                     }
                 }
-                .padding(.horizontal) // Add horizontal padding to the VStack
-                .padding(.top) // Add top padding to the VStack
+                .padding(.horizontal)
+                .padding(.top)
             }
         }
         .navigationTitle("Outdoor Guide")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-struct OutdoorGuideDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            OutdoorGuideDetailView()
-        }
-    }
-} 

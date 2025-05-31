@@ -4,23 +4,22 @@ struct BlinkingDevicesScannerDetailView: View {
     let toolItems: [ToolItem]
 
     init() {
-        // Decode the JSON data
         let decoder = JSONDecoder()
         do {
             let toolsData = try decoder.decode(ToolsData.self, from: toolsJsonData.data(using: .utf8)!)
             toolItems = toolsData.blinkingDevicesScanner
         } catch {
             print("Failed to decode blinking devices scanner data: \(error)")
-            toolItems = [] // Initialize with empty array on error
+            toolItems = []
         }
     }
 
     var body: some View {
-        ZStack { // Use ZStack for main background
-            Color.customBackground.edgesIgnoringSafeArea(.all) // Set custom background color
+        ZStack {
+            Color.customBackground.edgesIgnoringSafeArea(.all)
 
-            ScrollView { // Make content scrollable
-                VStack(spacing: 20) { // Arrange items vertically
+            ScrollView {
+                VStack(spacing: 20) {
                     ForEach(toolItems) { item in
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
@@ -70,11 +69,3 @@ struct BlinkingDevicesScannerDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-struct BlinkingDevicesScannerDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            BlinkingDevicesScannerDetailView()
-        }
-    }
-} 
