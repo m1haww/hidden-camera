@@ -1,68 +1,125 @@
 import SwiftUI
 
-struct CompassVisualDetailView: View {
-    let toolItems: [ToolItem]
-
-    init() {
-        let decoder = JSONDecoder()
-        do {
-            let toolsData = try decoder.decode(ToolsData.self, from: toolsJsonData.data(using: .utf8)!)
-            toolItems = toolsData.compassVisual
-        } catch {
-            print("Failed to decode compass visual data: \(error)")
-            toolItems = []
+struct CompassGauge: View {
+    var index: Double
+    
+    struct Arc: Shape {
+        var startAngle: Angle
+        var endAngle: Angle
+        
+        func path(in rect: CGRect) -> Path {
+            var path = Path()
+            path.addArc(center: CGPoint(x: rect.midX, y: rect.maxY),
+                        radius: rect.width / 2,
+                        startAngle: startAngle,
+                        endAngle: endAngle,
+                        clockwise: false)
+            return path
         }
     }
+    
+    var body: some View {
+        let gaugeSpan = 220.0
+        let clamped = max(0, min(500, index))
+        let valueRatio = clamped / 500.0
+        let angle = -gaugeSpan / 2 + valueRatio * gaugeSpan
+        
+        ZStack(alignment: .center) {
+            Circle()
+                .frame(width: 300, height: 300)
+                .foregroundColor(Color(hex: "#1a1f20"))
+            
+            Circle()
+                .frame(width: 285, height: 285)
+                .foregroundColor(Color.black)
+            
+            Circle()
+                .frame(width: 250, height: 270)
+                .foregroundColor(Color(hex: "#1a1f20"))
+            
+            Circle()
+                .frame(width: 135, height: 135)
+                .foregroundColor(Color(hex: "#252b2b"))
+            
+            Arc(startAngle: .degrees(160), endAngle: .degrees(20))
+                .stroke(
+                    LinearGradient(gradient: Gradient(colors: [
+                        .red, .orange, .yellow, .green
+                    ]), startPoint: .leading, endPoint: .trailing),
+                    style: StrokeStyle(lineWidth: 25, lineCap: .round)
+                )
+                .frame(width: 230)
+                .padding(.bottom, 155)
+            
+            Image("indicator")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 100)
+                .padding(.bottom, 20)
+                .rotationEffect(.degrees(angle))
+        }
+    }
+}
 
+struct CompassVisualDetailView: View {
+    @StateObject private var magneticFieldScanner = MagneticFieldScanner()
+    
     var body: some View {
         ZStack {
             Color.customBackground.edgesIgnoringSafeArea(.all)
-
-            ScrollView {
-                VStack(spacing: 20) {
-                    ForEach(toolItems) { item in
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Image(systemName: item.imageName)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.customButton)
-
-                                Text(item.title)
-                                    .font(.title2)
-                                    .foregroundColor(.customText)
-
-                                Spacer()
-                            }
-
-                            Text(item.description)
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .lineLimit(nil)
-
-                            if let signalDescription = item.signalDescription {
-                                VStack(alignment: .leading, spacing: 5) {
-                                    Text("Signal Description:")
-                                        .font(.headline)
-                                        .foregroundColor(.customText)
-                                    Text(signalDescription)
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }
-                                .padding(.top, 5)
-                            }
-                        }
-                        .padding()
-                        .background(Color(hex: "1c2021"))
-                        .cornerRadius(12)
+            
+            VStack(spacing: 40) {
+                Spacer()
+                
+                 HStack(alignment: .lastTextBaseline) {
+                     Text("\(Int(magneticFieldScanner.fieldStrength))")
+                         .font(.system(size: 60, weight: .bold))
+                         .foregroundColor(.customButton)
+                     Text("µT")
+                         .font(.title2)
+                         .foregroundColor(.gray)
+                 }
+                 .padding(.horizontal, 20)
+                 .padding(.vertical, 10)
+                 .background(Color(hex: "1c2021"))
+                 .cornerRadius(15)
+                 .padding(.vertical, 30)
+                
+                CompassGauge(index: magneticFieldScanner.fieldStrength)
+                    .padding(.bottom, 30)
+                
+                Spacer()
+                
+                Button(action: {
+                    if magneticFieldScanner.isScanning {
+                        magneticFieldScanner.stop()
+                    } else {
+                        magneticFieldScanner.startMagnetometer()
                     }
+                }) {
+                    HStack {
+                        Image(systemName: magneticFieldScanner.isScanning ? "stop.circle.fill" : "dial.high")
+                            .font(.title)
+                        Text(magneticFieldScanner.isScanning ? "Stop" : "Start")
+                            .font(.headline)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .padding(.vertical, 3)
+                    .frame(maxWidth: .infinity)
+                    .background(magneticFieldScanner.isScanning ? Color.red : Color.green)
+                    .cornerRadius(30)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 25)
                 }
-                .padding(.horizontal)
-                .padding(.top)
             }
         }
-        .navigationTitle("Compass Visual")
+        .navigationTitle("Visual Compass")
         .navigationBarTitleDisplayMode(.inline)
+        .onDisappear {
+            if magneticFieldScanner.isScanning {
+                magneticFieldScanner.stop()
+            }
+        }
     }
 }

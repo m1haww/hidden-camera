@@ -206,5 +206,14 @@ struct ScanResultDetailView: View {
         }
         .navigationTitle("Scanning Result")
         .navigationBarTitleDisplayMode(.inline)
+        .onDisappear {
+            if networkScanner.isScanning {
+                networkScanner.stop()
+            }
+            
+            if bluetoothManager.isScanning {
+                bluetoothManager.stopScanning()
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "no_bluetooth.png",
+      "filename" : "indicator.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

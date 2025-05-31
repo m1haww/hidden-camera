@@ -39,6 +39,17 @@ struct ContentView: View {
                             Text("Guides")
                         }
                         .tag(2)
+                    
+                    SettingsView()
+                        .tabItem {
+                            Image(systemName: "gearshape")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .clipped()
+                            Text("Settings")
+                        }
+                        .tag(3)
                 }
                 .accentColor(.customButton)
                 .blur(radius: appProvider.showAlert ? 10 : 0)
