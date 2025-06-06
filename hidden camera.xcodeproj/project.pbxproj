@@ -10,7 +10,7 @@
 		81158C622DF2E35A007D8DA0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81158C612DF2E35A007D8DA0 /* StoreKit.framework */; };
 		811D8A3A2DF00BBC00BCCD28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 811D8A392DF00BBC00BCCD28 /* RevenueCat */; };
 		811D8A3C2DF00BBC00BCCD28 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 811D8A3B2DF00BBC00BCCD28 /* RevenueCatUI */; };
-		81656AAA2DEABAE300F26B2B /* LanScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 81656AA92DEABAE300F26B2B /* LanScanner */; };
+		814767FB2DF2FA7200DA5AE3 /* LanScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 814767FA2DF2FA7200DA5AE3 /* LanScanner */; };
 		D5FF35AFFB771D133F4AC679 /* Pods_hidden_camera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE149BD7A6BE9E4C5638282 /* Pods_hidden_camera.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,8 +35,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				814767FB2DF2FA7200DA5AE3 /* LanScanner in Frameworks */,
 				811D8A3C2DF00BBC00BCCD28 /* RevenueCatUI in Frameworks */,
-				81656AAA2DEABAE300F26B2B /* LanScanner in Frameworks */,
 				81158C622DF2E35A007D8DA0 /* StoreKit.framework in Frameworks */,
 				D5FF35AFFB771D133F4AC679 /* Pods_hidden_camera.framework in Frameworks */,
 				811D8A3A2DF00BBC00BCCD28 /* RevenueCat in Frameworks */,
@@ -103,9 +103,9 @@
 			);
 			name = "hidden camera";
 			packageProductDependencies = (
-				81656AA92DEABAE300F26B2B /* LanScanner */,
 				811D8A392DF00BBC00BCCD28 /* RevenueCat */,
 				811D8A3B2DF00BBC00BCCD28 /* RevenueCatUI */,
+				814767FA2DF2FA7200DA5AE3 /* LanScanner */,
 			);
 			productName = "hidden camera";
 			productReference = 5CA2485E2DE867E900CEB5F0 /* hidden camera.app */;
@@ -136,8 +136,8 @@
 			mainGroup = 5CA248552DE867E900CEB5F0;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				81656AA82DEABAE300F26B2B /* XCRemoteSwiftPackageReference "lan-scanner" */,
 				811D8A382DF00BBC00BCCD28 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+				814767F92DF2FA7200DA5AE3 /* XCRemoteSwiftPackageReference "lan-scanner" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5CA2485F2DE867E900CEB5F0 /* Products */;
@@ -420,7 +420,7 @@
 				minimumVersion = 5.26.0;
 			};
 		};
-		81656AA82DEABAE300F26B2B /* XCRemoteSwiftPackageReference "lan-scanner" */ = {
+		814767F92DF2FA7200DA5AE3 /* XCRemoteSwiftPackageReference "lan-scanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MaatheusGois/lan-scanner.git";
 			requirement = {
@@ -441,9 +441,9 @@
 			package = 811D8A382DF00BBC00BCCD28 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
 			productName = RevenueCatUI;
 		};
-		81656AA92DEABAE300F26B2B /* LanScanner */ = {
+		814767FA2DF2FA7200DA5AE3 /* LanScanner */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 81656AA82DEABAE300F26B2B /* XCRemoteSwiftPackageReference "lan-scanner" */;
+			package = 814767F92DF2FA7200DA5AE3 /* XCRemoteSwiftPackageReference "lan-scanner" */;
 			productName = LanScanner;
 		};
 /* End XCSwiftPackageProductDependency section */
