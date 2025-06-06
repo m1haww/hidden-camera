@@ -2,6 +2,7 @@ import SwiftUI
 
 struct OutdoorGuideDetailView: View {
     let outdoorGuideItems: [GuideItem]
+    @State private var selectedGuide: GuideItem?
 
     init() {
         let decoder = JSONDecoder()
@@ -21,36 +22,56 @@ struct OutdoorGuideDetailView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(outdoorGuideItems) { item in
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Image(systemName: item.imageName)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.customButton)
+                        Button(action: {
+                            selectedGuide = item
+                        }) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    Image(systemName: item.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundColor(.customButton)
 
-                                Text(item.title)
-                                    .font(.title2)
-                                    .foregroundColor(.customText)
+                                    Text(item.title)
+                                        .font(.title2)
+                                        .foregroundColor(.customText)
 
-                                Spacer()
+                                    Spacer()
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.gray)
+                                        .font(.system(size: 14))
+                                }
+
+                                Text(item.description)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.leading)
                             }
-
-                            Text(item.description)
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .lineLimit(nil)
+                            .padding()
+                            .background(Color(hex: "1c2021"))
+                            .cornerRadius(12)
                         }
-                        .padding()
-                        .background(Color(hex: "1c2021"))
-                        .cornerRadius(12)
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding(.horizontal)
                 .padding(.top)
             }
         }
-        .navigationTitle("Outdoor Guide")
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Outdoor Guide")
+                    .foregroundStyle(.white)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $selectedGuide) { guide in
+            NavigationView {
+                GuideDetailView(guideItem: guide)
+            }
+        }
     }
 }

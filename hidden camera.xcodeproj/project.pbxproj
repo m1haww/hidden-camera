@@ -7,11 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81158C622DF2E35A007D8DA0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81158C612DF2E35A007D8DA0 /* StoreKit.framework */; };
+		811D8A3A2DF00BBC00BCCD28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 811D8A392DF00BBC00BCCD28 /* RevenueCat */; };
+		811D8A3C2DF00BBC00BCCD28 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 811D8A3B2DF00BBC00BCCD28 /* RevenueCatUI */; };
 		81656AAA2DEABAE300F26B2B /* LanScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 81656AA92DEABAE300F26B2B /* LanScanner */; };
+		D5FF35AFFB771D133F4AC679 /* Pods_hidden_camera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE149BD7A6BE9E4C5638282 /* Pods_hidden_camera.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0DE149BD7A6BE9E4C5638282 /* Pods_hidden_camera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_hidden_camera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CC3B891D9BFAB3A740DC7D4 /* Pods-hidden camera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hidden camera.release.xcconfig"; path = "Target Support Files/Pods-hidden camera/Pods-hidden camera.release.xcconfig"; sourceTree = "<group>"; };
 		5CA2485E2DE867E900CEB5F0 /* hidden camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hidden camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81158C612DF2E35A007D8DA0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		C6172D927333103988EB5423 /* Pods-hidden camera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hidden camera.debug.xcconfig"; path = "Target Support Files/Pods-hidden camera/Pods-hidden camera.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -27,18 +35,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				811D8A3C2DF00BBC00BCCD28 /* RevenueCatUI in Frameworks */,
 				81656AAA2DEABAE300F26B2B /* LanScanner in Frameworks */,
+				81158C622DF2E35A007D8DA0 /* StoreKit.framework in Frameworks */,
+				D5FF35AFFB771D133F4AC679 /* Pods_hidden_camera.framework in Frameworks */,
+				811D8A3A2DF00BBC00BCCD28 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4ACFFB9FAB1F80976AA3F97D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				81158C612DF2E35A007D8DA0 /* StoreKit.framework */,
+				0DE149BD7A6BE9E4C5638282 /* Pods_hidden_camera.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5CA248552DE867E900CEB5F0 = {
 			isa = PBXGroup;
 			children = (
 				5CA248602DE867E900CEB5F0 /* hidden camera */,
 				5CA2485F2DE867E900CEB5F0 /* Products */,
+				C4D0F65499249E1BF6A417B7 /* Pods */,
+				4ACFFB9FAB1F80976AA3F97D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -50,6 +73,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C4D0F65499249E1BF6A417B7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C6172D927333103988EB5423 /* Pods-hidden camera.debug.xcconfig */,
+				3CC3B891D9BFAB3A740DC7D4 /* Pods-hidden camera.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -57,6 +89,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5CA2486C2DE867EA00CEB5F0 /* Build configuration list for PBXNativeTarget "hidden camera" */;
 			buildPhases = (
+				8DEEB292A9C9A85FCA0345E3 /* [CP] Check Pods Manifest.lock */,
 				5CA2485A2DE867E900CEB5F0 /* Sources */,
 				5CA2485B2DE867E900CEB5F0 /* Frameworks */,
 				5CA2485C2DE867E900CEB5F0 /* Resources */,
@@ -71,6 +104,8 @@
 			name = "hidden camera";
 			packageProductDependencies = (
 				81656AA92DEABAE300F26B2B /* LanScanner */,
+				811D8A392DF00BBC00BCCD28 /* RevenueCat */,
+				811D8A3B2DF00BBC00BCCD28 /* RevenueCatUI */,
 			);
 			productName = "hidden camera";
 			productReference = 5CA2485E2DE867E900CEB5F0 /* hidden camera.app */;
@@ -102,6 +137,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				81656AA82DEABAE300F26B2B /* XCRemoteSwiftPackageReference "lan-scanner" */,
+				811D8A382DF00BBC00BCCD28 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5CA2485F2DE867E900CEB5F0 /* Products */;
@@ -122,6 +158,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8DEEB292A9C9A85FCA0345E3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-hidden camera-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5CA2485A2DE867E900CEB5F0 /* Sources */ = {
@@ -255,13 +316,14 @@
 		};
 		5CA2486D2DE867EA00CEB5F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6172D927333103988EB5423 /* Pods-hidden camera.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"hidden camera/Preview Content\"";
-				DEVELOPMENT_TEAM = LFM9U35578;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "hidden-camera-Info.plist";
@@ -269,6 +331,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices for network and signal analysis.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices for network and signal analysis.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to your camera to scan and analyze your surroundings.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -280,7 +343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.patt.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mary.hidden.camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -290,13 +353,14 @@
 		};
 		5CA2486E2DE867EA00CEB5F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CC3B891D9BFAB3A740DC7D4 /* Pods-hidden camera.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"hidden camera/Preview Content\"";
-				DEVELOPMENT_TEAM = LFM9U35578;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "hidden-camera-Info.plist";
@@ -304,6 +368,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices for network and signal analysis.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices for network and signal analysis.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to your camera to scan and analyze your surroundings.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -315,7 +380,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.patt.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mary.hidden.camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -347,6 +412,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		811D8A382DF00BBC00BCCD28 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.26.0;
+			};
+		};
 		81656AA82DEABAE300F26B2B /* XCRemoteSwiftPackageReference "lan-scanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MaatheusGois/lan-scanner.git";
@@ -358,6 +431,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		811D8A392DF00BBC00BCCD28 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 811D8A382DF00BBC00BCCD28 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		811D8A3B2DF00BBC00BCCD28 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 811D8A382DF00BBC00BCCD28 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
+		};
 		81656AA92DEABAE300F26B2B /* LanScanner */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81656AA82DEABAE300F26B2B /* XCRemoteSwiftPackageReference "lan-scanner" */;

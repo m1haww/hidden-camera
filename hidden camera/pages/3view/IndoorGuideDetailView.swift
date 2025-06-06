@@ -2,6 +2,7 @@ import SwiftUI
 
 struct IndoorGuideDetailView: View {
     let indoorGuideItems: [GuideItem]
+    @State private var selectedGuide: GuideItem?
 
     init() {
         let decoder = JSONDecoder()
@@ -19,38 +20,58 @@ struct IndoorGuideDetailView: View {
             Color.customBackground.edgesIgnoringSafeArea(.all)
 
             ScrollView {
-                VStack(spacing: 20) { // Use VStack for vertical layout
+                VStack(spacing: 20) {
                     ForEach(indoorGuideItems) { item in
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Image(systemName: item.imageName)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30, height: 30) // Adjust size as needed
-                                    .foregroundColor(.customButton)
+                        Button(action: {
+                            selectedGuide = item
+                        }) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    Image(systemName: item.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundColor(.customButton)
 
-                                Text(item.title)
-                                    .font(.title2)
-                                    .foregroundColor(.customText)
+                                    Text(item.title)
+                                        .font(.title2)
+                                        .foregroundColor(.customText)
 
-                                Spacer()
+                                    Spacer()
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.gray)
+                                        .font(.system(size: 14))
+                                }
+
+                                Text(item.description)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.leading)
                             }
-
-                            Text(item.description)
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .lineLimit(nil) // Allow multiple lines for description
+                            .padding()
+                            .background(Color(hex: "1c2021"))
+                            .cornerRadius(12)
                         }
-                        .padding()
-                        .background(Color(hex: "1c2021")) // Background color for each item card
-                        .cornerRadius(12) // Rounded corners for the item card
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding(.horizontal) // Add horizontal padding to the VStack
                 .padding(.top) // Add top padding to the VStack
             }
         }
-        .navigationTitle("Indoor Guide")
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Indoor Guide")
+                    .foregroundStyle(.white)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $selectedGuide) { guide in
+            NavigationView {
+                GuideDetailView(guideItem: guide)
+            }
+        }
     }
 }

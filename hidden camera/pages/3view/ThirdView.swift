@@ -5,17 +5,15 @@ struct ThirdView: View {
     @State private var showOutdoorGuide = false
     
     var body: some View {
-        ZStack { // Use ZStack for main background
-            Color.customBackground.edgesIgnoringSafeArea(.all) // Set custom background color for the whole view
+        ZStack {
+            Color.customBackground.edgesIgnoringSafeArea(.all)
 
             VStack(spacing: 20) {
-                // Indoor Places Card
                 Button {
                     showIndoorGuide = true
                 } label: {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                            // Indoor Icon (Placeholder - replace with your asset if needed)
                             Image(systemName: "chair.fill")
                                 .resizable()
                                 .scaledToFit()
@@ -24,7 +22,6 @@ struct ThirdView: View {
                             
                             Spacer()
                             
-                            // Navigation Arrow
                             Image(systemName: "arrow.up.right")
                                 .foregroundColor(.gray)
                                 .padding(5)

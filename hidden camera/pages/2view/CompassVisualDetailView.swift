@@ -19,37 +19,16 @@ struct CompassGauge: View {
     }
     
     var body: some View {
-        let gaugeSpan = 220.0
+        let gaugeSpan = 240.0
         let clamped = max(0, min(500, index))
         let valueRatio = clamped / 500.0
         let angle = -gaugeSpan / 2 + valueRatio * gaugeSpan
         
         ZStack(alignment: .center) {
-            Circle()
+            Image("circle")
+                .resizable()
+                .scaledToFit()
                 .frame(width: 300, height: 300)
-                .foregroundColor(Color(hex: "#1a1f20"))
-            
-            Circle()
-                .frame(width: 285, height: 285)
-                .foregroundColor(Color.black)
-            
-            Circle()
-                .frame(width: 250, height: 270)
-                .foregroundColor(Color(hex: "#1a1f20"))
-            
-            Circle()
-                .frame(width: 135, height: 135)
-                .foregroundColor(Color(hex: "#252b2b"))
-            
-            Arc(startAngle: .degrees(160), endAngle: .degrees(20))
-                .stroke(
-                    LinearGradient(gradient: Gradient(colors: [
-                        .red, .orange, .yellow, .green
-                    ]), startPoint: .leading, endPoint: .trailing),
-                    style: StrokeStyle(lineWidth: 25, lineCap: .round)
-                )
-                .frame(width: 230)
-                .padding(.bottom, 155)
             
             Image("indicator")
                 .resizable()
@@ -105,7 +84,6 @@ struct CompassVisualDetailView: View {
                     }
                     .foregroundColor(.white)
                     .padding()
-                    .padding(.vertical, 3)
                     .frame(maxWidth: .infinity)
                     .background(magneticFieldScanner.isScanning ? Color.red : Color.green)
                     .cornerRadius(30)
@@ -114,7 +92,12 @@ struct CompassVisualDetailView: View {
                 }
             }
         }
-        .navigationTitle("Visual Compass")
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Visual Compass")
+                    .foregroundStyle(.white)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .onDisappear {
             if magneticFieldScanner.isScanning {

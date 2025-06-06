@@ -1,14 +1,23 @@
 import SwiftUI
 
 struct SecondView: View {
+    @ObservedObject private var appProvider = AppProvider.shared
+    
     var body: some View {
-        ZStack { // Use ZStack for main background
-            Color.customBackground.edgesIgnoringSafeArea(.all) // Set custom background color for the whole view
+        ZStack {
+            Color.customBackground.edgesIgnoringSafeArea(.all)
 
             ScrollView { // Make content scrollable if needed
                 VStack(spacing: 20) { // Arrange cards vertically
-                    // Blinking Devices Scanner Card
-                    NavigationLink(destination: BlinkingDevicesScannerDetailView()) {
+                    Button(action: {
+                        if appProvider.isPremiumUser {
+                            appProvider.navigationPath.append(NavigationDestination.blinkingScanner)
+                        } else {
+                            withAnimation {
+                                appProvider.showPaywall = true
+                            }
+                        }
+                    }) {
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
                                 Image(systemName: "scope") // Blinking Devices Scanner Icon (using scope as it looks similar)
@@ -19,7 +28,7 @@ struct SecondView: View {
 
                                 Spacer()
 
-                                Image(systemName: "arrow.up.right") // Navigation Arrow
+                                Image(systemName: "arrow.up.right")
                                     .foregroundColor(.gray)
                                     .padding(5)
                                     .background(Color.gray.opacity(0.2))
@@ -41,8 +50,15 @@ struct SecondView: View {
                     }
                     .buttonStyle(PlainButtonStyle()) // Use PlainButtonStyle to remove default button appearance
 
-                    // Compass Visual Card
-                    NavigationLink(destination: CompassVisualDetailView()) {
+                    Button(action: {
+                        if appProvider.isPremiumUser {
+                            appProvider.navigationPath.append(NavigationDestination.compassVisualDetail)
+                        } else {
+                            withAnimation {
+                                appProvider.showPaywall = true
+                            }
+                        }
+                    }) {
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
                                 Image(systemName: "compass.drawing") // Compass Visual Icon
@@ -101,10 +117,3 @@ struct SecondView: View {
         }
     }
 }
-
-#Preview {
-    // Need to embed in a NavigationView for previewing navigation elements
-    NavigationView {
-        SecondView()
-    }
-} 

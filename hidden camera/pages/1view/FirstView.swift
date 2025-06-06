@@ -36,8 +36,10 @@ struct FirstView: View {
                                 .foregroundColor(.red)
                         } else if let ipInfo = deviceInfoProvider.geoIPInfo?.query {
                             Text("\(ipInfo)")
+                                .foregroundColor(.customText)
                         } else {
                             Text("No IP Info Available")
+                                .foregroundColor(.customText)
                         }
                     }
                 }
@@ -89,12 +91,18 @@ struct FirstView: View {
                 Spacer()
                 
                 Button {
-                    if networkScanner.isScanning || bluetoothManager.isScanning { return }
-                    
-                    bluetoothManager.startScanning()
-                    
-                    networkScanner.showAlertAtFinish = true
-                    networkScanner.start()
+                    if appProvider.isPremiumUser {
+                        if networkScanner.isScanning || bluetoothManager.isScanning { return }
+                        
+                        bluetoothManager.startScanning()
+                        
+                        networkScanner.showAlertAtFinish = true
+                        networkScanner.start()
+                    } else {
+                        withAnimation {
+                            appProvider.showPaywall = true
+                        }
+                    }
                 } label: {
                     HStack {
                         if networkScanner.isScanning {
