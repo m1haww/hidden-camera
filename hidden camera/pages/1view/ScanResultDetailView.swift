@@ -85,25 +85,24 @@ struct ScanResultDetailView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 75, height: 75)
-                                .foregroundColor(.gray.opacity(0.9))
+                                .foregroundColor(.gray.opacity(0.7))
                             
                             Text("No Devices Found")
                                 .font(.title3)
                                 .fontWeight(.semibold)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.white)
                             
                             Text("Make sure your WiFi is turned on and devices are nearby.")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.white.opacity(0.5))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                         }
                         .padding(20)
                         .padding(.vertical, 8)
                         .frame(maxWidth: .infinity)
-                        .background(Color(.systemGray6))
+                        .background(Color(hex: "1c2021"))
                         .cornerRadius(16)
-                        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                         .padding(.horizontal)
                         .padding(.bottom, 50)
                         
@@ -119,7 +118,7 @@ struct ScanResultDetailView: View {
                                             Image(systemName: device.isSecure ? "wifi" : "antenna.radiowaves.left.and.right")
                                                 .foregroundColor(device.isSecure ? .customButton : .red)
                                             
-                                            Text(device.data.ipAddress)
+                                            Text(device.ipAddress)
                                                 .foregroundColor(.customText)
                                             
                                             Spacer()
@@ -146,25 +145,24 @@ struct ScanResultDetailView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 75, height: 75)
-                                .foregroundColor(.gray.opacity(0.9))
+                                .foregroundColor(.gray.opacity(0.7))
                             
                             Text("No Bluetooth Devices Found")
                                 .font(.title3)
                                 .fontWeight(.semibold)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.white)
                             
                             Text("Make sure your Bluetooth is turned on and devices are nearby.")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.white.opacity(0.5))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                         }
                         .padding(20)
                         .padding(.vertical, 8)
                         .frame(maxWidth: .infinity)
-                        .background(Color(.systemGray6))
+                        .background(Color(hex: "1c2021"))
                         .cornerRadius(16)
-                        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                         .padding(.horizontal)
                         .padding(.bottom, 50)
                         
@@ -204,7 +202,12 @@ struct ScanResultDetailView: View {
             }
             .padding(.top)
         }
-        .navigationTitle("Scanning Result")
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Scan Results")
+                    .foregroundColor(.white)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .onDisappear {
             if networkScanner.isScanning {

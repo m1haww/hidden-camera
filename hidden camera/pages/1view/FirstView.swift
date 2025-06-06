@@ -107,6 +107,7 @@ struct FirstView: View {
                     HStack {
                         if networkScanner.isScanning {
                             ProgressView()
+                                .foregroundColor(.white)
                         } else {
                             Image(systemName: "dot.radiowaves.left.and.right")
                                 .resizable()

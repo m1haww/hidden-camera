@@ -1,15 +1,6 @@
 {
-  "originHash" : "ed529ccdb5fe9fe2adc07c8e767c4f379c62e294306b54973d7d88d5b3ecfd98",
+  "originHash" : "a3bcaa15a454fa7370ad47de0b4a365f92876b40d5fa0a3e490eb29c4688cd7b",
   "pins" : [
-    {
-      "identity" : "lan-scanner",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/MaatheusGois/lan-scanner.git",
-      "state" : {
-        "branch" : "develop",
-        "revision" : "b5d4cda7161efec0fa042670eaa9bb7aeeba5bee"
-      }
-    },
     {
       "identity" : "purchases-ios-spm",
       "kind" : "remoteSourceControl",

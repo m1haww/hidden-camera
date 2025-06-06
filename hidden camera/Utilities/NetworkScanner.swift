@@ -1,20 +1,6 @@
 import Foundation
-import LanScanner
 import SwiftUI
-
-func isSecureDevice(_ device: LanDevice) -> Bool {
-    let isTrustedBrand = trustedBrands.contains(where: { device.brand.localizedCaseInsensitiveContains($0) })
-    let isTrustedName = trustedNameKeywords.contains(where: { device.name.localizedCaseInsensitiveContains($0) })
-
-    let isIpPrivateRange = device.ipAddress.starts(with: "192.168.") || device.ipAddress.starts(with: "10.")
-    
-    let isLikelyGateway = device.ipAddress.split(separator: ".").last == "1"
-
-    return isTrustedBrand || isTrustedName || isIpPrivateRange || isLikelyGateway
-}
-
-let trustedBrands = ["Apple", "Samsung", "Dell", "HP", "Sony", "Canon", "Brother"]
-let trustedNameKeywords = ["iPhone", "iPad", "Mac", "Printer", "NAS", "Router"]
+import Combine
 
 final class NetworkScanner: ObservableObject {
     static let shared = NetworkScanner()
@@ -22,7 +8,11 @@ final class NetworkScanner: ObservableObject {
     @ObservedObject private var appProvider = AppProvider.shared
     @ObservedObject private var bluetoothManager = BeaconScanner.shared
     
-    private init() {}
+    private let nativeScanner = NativeNetworkScanner.shared
+    
+    private init() {
+        setupBindings()
+    }
     
     @Published var connectedDevices = [WiFiDevice]()
     @Published var progress: CGFloat = .zero
@@ -31,42 +21,32 @@ final class NetworkScanner: ObservableObject {
     
     @Published var isScanning: Bool = false
     
-    private lazy var scanner = LanScanner(delegate: self)
+    private func setupBindings() {
+        // Observe changes from native scanner
+        nativeScanner.$connectedDevices
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] nativeDevices in
+                self?.connectedDevices = nativeDevices.map { WiFiDevice(nativeDevice: $0) }
+            }
+            .store(in: &cancellables)
+        
+        nativeScanner.$progress
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$progress)
+        
+        nativeScanner.$isScanning
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$isScanning)
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     func start() {
-        connectedDevices.removeAll()
-        progress = .zero
-        isScanning = true
-        scanner.start()
+        nativeScanner.showAlertAtFinish = showAlertAtFinish
+        nativeScanner.start()
     }
     
     func stop() {
-        isScanning = false
-        progress = .zero
-        scanner.stop()
-    }
-}
-
-extension NetworkScanner: LanScannerDelegate {
-    func lanScanHasUpdatedProgress(_ progress: CGFloat, address: String) {
-        self.progress = progress
-    }
-    
-    func lanScanDidFindNewDevice(_ device: LanDevice) {
-        let wifiDevice = WiFiDevice(device: device)
-        wifiDevice.isSecure = isSecureDevice(device)
-        connectedDevices.append(wifiDevice)
-    }
-    
-    func lanScanDidFinishScanning() {
-        isScanning = false
-        progress = .zero
-        bluetoothManager.stopScanning()
-        
-        if showAlertAtFinish {
-            withAnimation {
-                appProvider.showAlert = true
-            }
-        }
+        nativeScanner.stop()
     }
 }

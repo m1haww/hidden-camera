@@ -1,5 +1,4 @@
 import SwiftUI
-import LanScanner
 
 struct LanDeviceDetailView: View {
     @ObservedObject var device: WiFiDevice
@@ -53,7 +52,7 @@ struct LanDeviceDetailView: View {
                         Text("IP Address")
                             .foregroundColor(.gray)
                         Spacer()
-                        Text(device.data.ipAddress)
+                        Text(device.ipAddress)
                             .foregroundColor(.customText)
                     }
                     Divider().background(Color.gray.opacity(0.5))
@@ -64,7 +63,7 @@ struct LanDeviceDetailView: View {
                         Text("Mac Address")
                             .foregroundColor(.gray)
                         Spacer()
-                        Text(device.data.mac)
+                        Text(device.macAddress)
                             .foregroundColor(.customText)
                     }
                     Divider().background(Color.gray.opacity(0.5))
@@ -75,7 +74,7 @@ struct LanDeviceDetailView: View {
                         Text("Model")
                             .foregroundColor(.gray)
                         Spacer()
-                        Text(device.data.brand.isEmpty ? "Unknown" : device.data.brand)
+                        Text(device.brand.isEmpty ? "Unknown" : device.brand)
                             .foregroundColor(.customText)
                     }
                 }
@@ -89,7 +88,12 @@ struct LanDeviceDetailView: View {
             .padding(.top)
             .padding(.horizontal)
         }
-        .navigationTitle(device.data.name)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(device.name)
+                    .foregroundColor(.white)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
     }
 }
