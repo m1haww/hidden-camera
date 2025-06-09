@@ -30,11 +30,11 @@ struct SplashScreenView: View {
                     )
                 
                 VStack(spacing: 10) {
-                    Text("Hidden Camera")
+                    Text("MTrak")
                         .font(.system(size: 36, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                     
-                    Text("Detector")
+                    Text("Cam Detector")
                         .font(.system(size: 24, weight: .medium, design: .rounded))
                         .foregroundColor(.accentColor)
                 }

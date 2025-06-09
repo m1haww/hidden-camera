@@ -99,13 +99,13 @@ struct OnboardingPage1: View {
                 .shadow(color: .white.opacity(0.2), radius: 40, x: 0, y: 20)
             
             VStack(spacing: 20) {
-                Text("Detect Hidden Cameras")
+                Text("Privacy Awareness Tool")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
-                Text("Protect your privacy with advanced detection technology that finds hidden cameras in any environment")
+                Text("Learn about potential privacy concerns and understand how to check for suspicious devices in your surroundings")
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
@@ -130,13 +130,13 @@ struct OnboardingPage2: View {
                 .shadow(color: .blue.opacity(0.2), radius: 40, x: 0, y: 20)
             
             VStack(spacing: 20) {
-                Text("Multiple Detection Methods")
+                Text("Educational Scanning Tools")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
-                Text("Scan WiFi networks, Bluetooth devices, and use magnetic field detection to find any hidden recording device")
+                Text("Explore network connections and electromagnetic fields to understand your environment better. For educational purposes only")
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
@@ -161,13 +161,13 @@ struct OnboardingPage3: View {
                 .shadow(color: .green.opacity(0.2), radius: 40, x: 0, y: 20)
             
             VStack(spacing: 20) {
-                Text("Stay Safe Everywhere")
+                Text("Be Privacy Conscious")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
-                Text("Whether in hotels, Airbnbs, or public spaces, ensure your privacy is protected with real-time scanning")
+                Text("Use this app as a learning tool to be more aware of your surroundings. Results are indicative only and should not replace professional security advice")
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
