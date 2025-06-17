@@ -11,24 +11,19 @@ struct FirstView: View {
     
     var body: some View {
         ZStack {
-            Color.customBackground.edgesIgnoringSafeArea(.all)
+            StyleGuide.Navigation.backgroundColor.edgesIgnoringSafeArea(.all)
             
-            VStack(spacing: 25) {
+            VStack(spacing: StyleGuide.Spacing.large) {
                 VStack(alignment: .leading) {
-                    HStack {
-                        Text("Connection Type")
-                            .foregroundColor(.gray)
-                        
-                        Spacer()
-                        
-                        Text(deviceInfoProvider.geoIPInfo?.mobile ?? false ? "Cellular" : "Wi-Fi")
-                            .foregroundColor(.customText)
-                    }
+                    InfoRow(
+                        title: "Connection Type",
+                        value: deviceInfoProvider.geoIPInfo?.mobile ?? false ? "Cellular" : "Wi-Fi"
+                    )
                     Divider()
                         .background(Color.gray.opacity(0.5))
                     HStack {
                         Text("IP Address")
-                            .foregroundColor(.gray)
+                            .foregroundColor(StyleGuide.Typography.captionColor)
                         Spacer()
                         
                         if let error = deviceInfoProvider.error {
@@ -36,42 +31,42 @@ struct FirstView: View {
                                 .foregroundColor(.red)
                         } else if let ipInfo = deviceInfoProvider.geoIPInfo?.query {
                             Text("\(ipInfo)")
-                                .foregroundColor(.customText)
+                                .foregroundColor(StyleGuide.Typography.titleColor)
                         } else {
                             Text("No IP Info Available")
-                                .foregroundColor(.customText)
+                                .foregroundColor(StyleGuide.Typography.titleColor)
                         }
                     }
                 }
-                .padding(.vertical, 15)
-                .padding(.horizontal)
-                .background(Color(hex: "1c2021"))
+                .padding(.vertical, StyleGuide.Spacing.medium)
+                .padding(.horizontal, StyleGuide.Cards.padding)
+                .background(StyleGuide.Cards.backgroundColor)
                 .cornerRadius(8)
-                .padding(.horizontal, 10)
+                .padding(.horizontal, StyleGuide.Spacing.small)
                 
                 Spacer()
                 
-                VStack(spacing: 15) {
+                VStack(spacing: StyleGuide.Spacing.medium) {
                     ZStack {
                         Circle()
-                            .fill(Color.customBackground)
-                            .frame(width: 160, height: 160)
+                            .fill(StyleGuide.Navigation.backgroundColor)
+                            .frame(width: StyleGuide.Scanning.progressCircleSize, height: StyleGuide.Scanning.progressCircleSize)
                         
                         Circle()
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 8)
-                            .frame(width: 160, height: 160)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: StyleGuide.Scanning.progressLineWidth)
+                            .frame(width: StyleGuide.Scanning.progressCircleSize, height: StyleGuide.Scanning.progressCircleSize)
                         
                         Circle()
                             .trim(from: 0.0, to: networkScanner.progress)
-                            .stroke(Color.customButton, style: StrokeStyle(lineWidth: 8, lineCap: .round))
-                            .frame(width: 160, height: 160)
+                            .stroke(Color.customButton, style: StrokeStyle(lineWidth: StyleGuide.Scanning.progressLineWidth, lineCap: .round))
+                            .frame(width: StyleGuide.Scanning.progressCircleSize, height: StyleGuide.Scanning.progressCircleSize)
                             .rotationEffect(.degrees(-90))
                             .animation(.linear(duration: 0.5), value: networkScanner.progress)
                         
                         Image("searchicon")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 65, height: 65)
+                            .frame(width: StyleGuide.Scanning.iconSize, height: StyleGuide.Scanning.iconSize)
                             .foregroundColor(networkScanner.isScanning ? Color(hex: "29B684") : (networkScanner.progress >= 1.0 ? .customButton : .gray))
                     }
                     
@@ -84,9 +79,9 @@ struct FirstView: View {
                 
                 Text("Scan nearby Wi-Fi and Bluetooth networks to monitor and analyze devices, tracking any unusual or unexpected activity")
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundColor(StyleGuide.Typography.captionColor)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 30)
+                    .padding(.horizontal, StyleGuide.Spacing.extraLarge)
                 
                 Spacer()
                 
@@ -119,34 +114,25 @@ struct FirstView: View {
                             .font(.body)
                     }
                     .foregroundColor(.white)
-                    .padding(15)
+                    .padding(StyleGuide.Spacing.medium)
                     .frame(maxWidth: .infinity)
                     .background(Color.customButton)
                     .cornerRadius(17)
                 }
                 .padding(.horizontal)
-                .padding(.bottom, 25)
+                .padding(.bottom, StyleGuide.Spacing.large)
             }
             .padding(.top)
             .padding(.horizontal)
         }
-        .navigationTitle("Scan")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                        .foregroundColor(.customButton)
-                }
+        .standardNavigationStyle(title: "Scan")
+        .standardToolbar(
+            onRefresh: {
+                // TODO: Implement refresh action
+            },
+            onHexagon: {
+                // TODO: Implement hexagon action
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                } label: {
-                    Image(systemName: "hexagon.fill")
-                        .foregroundColor(.customButton)
-                }
-            }
-        }
+        )
     }
 }

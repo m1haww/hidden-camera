@@ -85,7 +85,7 @@ struct ContentView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                        Text("Cam Detector")
+                        Text("MTrak")
                             .foregroundStyle(.white)
                             .font(.title2)
                     }

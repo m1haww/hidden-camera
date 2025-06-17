@@ -11,7 +11,7 @@ struct SettingsView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: StyleGuide.Spacing.small) {
                 if !appProvider.isPremiumUser {
                     Button(action: {
                         withAnimation {
@@ -63,137 +63,49 @@ struct SettingsView: View {
                     .padding(.bottom, 8)
                 }
                 
-                Button(action: {
-                    if let url = URL(string: "https://www.freeprivacypolicy.com/live/ac37fc73-30fc-4cea-8f2f-2329f400c768") {
-                        UIApplication.shared.open(url)
-                    }
-                }) {
-                    HStack {
-                        ZStack {
-                            Circle()
-                                .fill(Color.blue.opacity(0.2))
-                                .frame(width: 40, height: 40)
-                            
-                            Image(systemName: "doc.text")
-                                .foregroundColor(.blue)
-                                .font(.system(size: 18))
+                SettingsRow(
+                    icon: "doc.text",
+                    iconColor: .blue,
+                    iconBackgroundColor: Color.blue.opacity(0.2),
+                    title: "Terms of Use",
+                    action: {
+                        if let url = URL(string: "https://www.freeprivacypolicy.com/live/ac37fc73-30fc-4cea-8f2f-2329f400c768") {
+                            UIApplication.shared.open(url)
                         }
-                        
-                        Text("Terms of Use")
-                            .font(.system(size: 17, weight: .medium))
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 14))
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.gray.opacity(0.1))
-                    )
-                }
+                )
                 
-                Button(action: {
-                    if let url = URL(string: "https://www.freeprivacypolicy.com/live/d174945f-3722-403b-a62f-c0f165a8ff7a") {
-                        UIApplication.shared.open(url)
-                    }
-                }) {
-                    HStack {
-                        ZStack {
-                            Circle()
-                                .fill(Color.green.opacity(0.2))
-                                .frame(width: 40, height: 40)
-                            
-                            Image(systemName: "shield.lefthalf.filled")
-                                .foregroundColor(.green)
-                                .font(.system(size: 18))
+                SettingsRow(
+                    icon: "shield.lefthalf.filled",
+                    iconColor: .green,
+                    iconBackgroundColor: Color.green.opacity(0.2),
+                    title: "Privacy Policy",
+                    action: {
+                        if let url = URL(string: "https://www.freeprivacypolicy.com/live/d174945f-3722-403b-a62f-c0f165a8ff7a") {
+                            UIApplication.shared.open(url)
                         }
-                        
-                        Text("Privacy Policy")
-                            .font(.system(size: 17, weight: .medium))
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 14))
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.gray.opacity(0.1))
-                    )
-                }
+                )
                 
-                Button(action: {
-                    requestReview()
-                }) {
-                    HStack {
-                        ZStack {
-                            Circle()
-                                .fill(Color.yellow.opacity(0.2))
-                                .frame(width: 40, height: 40)
-                            
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
-                                .font(.system(size: 18))
-                        }
-                        
-                        Text("Rate Us")
-                            .font(.system(size: 17, weight: .medium))
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 14))
+                SettingsRow(
+                    icon: "star.fill",
+                    iconColor: .yellow,
+                    iconBackgroundColor: Color.yellow.opacity(0.2),
+                    title: "Rate Us",
+                    action: {
+                        requestReview()
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.gray.opacity(0.1))
-                    )
-                }
+                )
                 
-                Button(action: {
-                    showingShareSheet = true
-                }) {
-                    HStack {
-                        ZStack {
-                            Circle()
-                                .fill(Color.purple.opacity(0.2))
-                                .frame(width: 40, height: 40)
-                            
-                            Image(systemName: "square.and.arrow.up")
-                                .foregroundColor(.purple)
-                                .font(.system(size: 18))
-                        }
-                        
-                        Text("Share App")
-                            .font(.system(size: 17, weight: .medium))
-                            .foregroundColor(.white)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 14))
+                SettingsRow(
+                    icon: "square.and.arrow.up",
+                    iconColor: .purple,
+                    iconBackgroundColor: Color.purple.opacity(0.2),
+                    title: "Share App",
+                    action: {
+                        showingShareSheet = true
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.gray.opacity(0.1))
-                    )
-                }
+                )
                 .sheet(isPresented: $showingShareSheet) {
                     ShareSheet(items: [
                         "Check out Cam Detector - the best app to detect hidden cameras and protect your privacy! Download it here: https://apps.apple.com/app/idYOURAPPID"
@@ -204,7 +116,7 @@ struct SettingsView: View {
             }
             .padding()
         }
-        .background(Color.customBackground.ignoresSafeArea())
+        .standardBackground()
     }
     
     func requestReview() {

@@ -6,106 +6,45 @@ struct ThirdView: View {
     
     var body: some View {
         ZStack {
-            Color.customBackground.edgesIgnoringSafeArea(.all)
+            StyleGuide.Navigation.backgroundColor.edgesIgnoringSafeArea(.all)
 
-            VStack(spacing: 20) {
-                Button {
-                    showIndoorGuide = true
-                } label: {
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Image(systemName: "chair.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.customButton) // Apply custom color
-                            
-                            Spacer()
-                            
-                            Image(systemName: "arrow.up.right")
-                                .foregroundColor(.gray)
-                                .padding(5)
-                                .background(Color.gray.opacity(0.2))
-                                .clipShape(Circle())
-                        }
-                        
-                        Text("Indoor Places")
-                            .font(.title2)
-                            .foregroundColor(.customText)
-                        
-                        Text("Learn about common indoor objects that may contain small electronic components and explore general tips for environmental awareness.")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .lineLimit(3)
+            VStack(spacing: StyleGuide.Spacing.large) {
+                FeatureCard(
+                    icon: "chair.fill",
+                    iconColor: .customButton,
+                    title: "Indoor Places",
+                    description: "Learn about common indoor objects that may contain small electronic components and explore general tips for environmental awareness.",
+                    isPremium: false,
+                    action: {
+                        showIndoorGuide = true
                     }
-                    .padding()
-                    .background(Color(hex: "1c2021")) // Background color for the card
-                    .cornerRadius(12) // Rounded corners
-                }
-                .buttonStyle(PlainButtonStyle()) // Remove default button styling
+                )
                 
-                // Outdoor Places Card
-                Button {
-                    showOutdoorGuide = true
-                } label: {
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            // Outdoor Icon (Placeholder - replace with your asset if needed)
-                            Image(systemName: "tree.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.customButton) // Apply custom color
-                            
-                            Spacer()
-                            
-                            // Navigation Arrow
-                            Image(systemName: "arrow.up.right")
-                                .foregroundColor(.gray)
-                                .padding(5)
-                                .background(Color.gray.opacity(0.2))
-                                .clipShape(Circle())
-                        }
-                        
-                        Text("Outdoor Places")
-                            .font(.title2)
-                            .foregroundColor(.customText)
-                        
-                        Text("Surveillance devices may be concealed in outdoor areas such as trees, fences, or public fixtures. Discover typical hiding methods and how to spot these devices during your inspection")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .lineLimit(4)
+                FeatureCard(
+                    icon: "tree.fill",
+                    iconColor: .customButton,
+                    title: "Outdoor Places",
+                    description: "Surveillance devices may be concealed in outdoor areas such as trees, fences, or public fixtures. Discover typical hiding methods and how to spot these devices during your inspection",
+                    isPremium: false,
+                    action: {
+                        showOutdoorGuide = true
                     }
-                    .padding()
-                    .background(Color(hex: "1c2021")) // Background color for the card
-                    .cornerRadius(12) // Rounded corners
-                }
-                .buttonStyle(PlainButtonStyle()) // Remove default button styling
+                )
                 
-                Spacer() // Push content to the top
+                Spacer()
             }
             .padding(.horizontal)
-            .padding(.top) // Add padding at the top
+            .padding(.top)
         }
-        .navigationTitle("Guides") // Set the navigation bar title
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar { // Add toolbar items (like AppBar actions)
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                } label: {
-                    Image(systemName: "arrow.clockwise") // System image for refresh
-                        .foregroundColor(.customButton) // Apply custom color
-                }
+        .standardNavigationStyle(title: "Guides")
+        .standardToolbar(
+            onRefresh: {
+                // TODO: Implement refresh action
+            },
+            onHexagon: {
+                // TODO: Implement hexagon action
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "hexagon.fill") // System image for a filled hexagon
-                        .foregroundColor(.customButton) // Apply custom color
-                }
-            }
-        }
+        )
         .sheet(isPresented: $showIndoorGuide) {
             NavigationView {
                 IndoorGuideDetailView()
