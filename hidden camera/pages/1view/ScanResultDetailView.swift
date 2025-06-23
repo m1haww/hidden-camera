@@ -19,7 +19,7 @@ struct ScanResultDetailView: View {
                     .frame(width: 80, height: 80)
                     .foregroundColor(.customButton)
                 
-                Text("Scan nearby Wi-Fi and Bluetooth networks to monitor and analyze device activity")
+                Text("Scan local Wi-Fi and Bluetooth for unusual device activity")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)

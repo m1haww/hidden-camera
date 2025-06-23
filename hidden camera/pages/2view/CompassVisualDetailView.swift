@@ -76,19 +76,30 @@ struct CompassVisualDetailView: View {
                         magneticFieldScanner.startMagnetometer()
                     }
                 }) {
-                    HStack {
+                    HStack(spacing: 12) {
                         Image(systemName: magneticFieldScanner.isScanning ? "stop.circle.fill" : "dial.high")
-                            .font(.title)
+                            .font(.system(size: 24, weight: .semibold))
                         Text(magneticFieldScanner.isScanning ? "Stop" : "Start")
-                            .font(.headline)
+                            .font(.system(size: 20, weight: .semibold))
                     }
-                    .foregroundColor(.white)
-                    .padding()
+                    .foregroundColor(.black)
+                    .padding(.vertical, 20)
                     .frame(maxWidth: .infinity)
-                    .background(magneticFieldScanner.isScanning ? Color.red : Color.green)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: magneticFieldScanner.isScanning 
+                                ? [Color(hex: "FF6B6B"), Color(hex: "FF4757")] 
+                                : [Color.accentColor, Color.accentColor.opacity(0.8)]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .cornerRadius(30)
+                    .shadow(color: magneticFieldScanner.isScanning ? Color.red.opacity(0.3) : Color.accentColor.opacity(0.3), radius: 15, x: 0, y: 8)
                     .padding(.horizontal, 20)
                     .padding(.bottom, 25)
+                    .scaleEffect(magneticFieldScanner.isScanning ? 0.98 : 1.0)
+                    .animation(.easeInOut(duration: 0.1), value: magneticFieldScanner.isScanning)
                 }
             }
         }

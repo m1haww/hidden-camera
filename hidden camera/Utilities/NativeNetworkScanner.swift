@@ -259,13 +259,31 @@ final class NativeNetworkScanner: ObservableObject {
     private func finishScanning() {
         DispatchQueue.main.async { [weak self] in
             self?.isScanning = false
-            self?.progress = .zero
             self?.bluetoothManager.stopScanning()
+            
+            // Save scan to history
+            if let devices = self?.connectedDevices, !devices.isEmpty {
+                let historyItem = ScanHistoryManager.shared.createWiFiScanHistory(from: devices.map { device in
+                    NetworkScanner.NetworkDevice(
+                        ipAddress: device.ipAddress,
+                        hostname: device.hostname,
+                        macAddress: device.macAddress,
+                        macVendor: device.vendor,
+                        isReachable: device.isReachable
+                    )
+                })
+                ScanHistoryManager.shared.addScan(historyItem)
+            }
             
             if self?.showAlertAtFinish == true {
                 withAnimation {
                     self?.appProvider.showAlert = true
                 }
+            }
+            
+            // Reset progress after a short delay to ensure smooth animation
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.progress = .zero
             }
         }
     }

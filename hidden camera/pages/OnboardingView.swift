@@ -43,25 +43,38 @@ struct OnboardingView: View {
                     }) {
                         Text("Continue")
                             .font(.system(size: 20, weight: .semibold))
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 20)
                             .background(Color.accentColor)
                             .cornerRadius(28)
                     }
                     .padding(.horizontal, 20)
+                }
+                .padding(.bottom, 30)
+            }
+            
+            VStack {
+                HStack {
+                    Spacer()
                     
                     Button(action: {
+                        appProvider.completeOnboarding()
                         withAnimation {
-                            currentPage += 1
+                            appProvider.showOnboardingPaywall = true
                         }
                     }) {
                         Text("Skip")
-                            .font(.subheadline)
+                            .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.gray)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
                     }
                 }
-                .padding(.bottom, 30)
+                .padding(.top, 50)
+                .padding(.trailing, 10)
+                
+                Spacer()
             }
         }
         .onAppear(perform: {
@@ -99,13 +112,13 @@ struct OnboardingPage1: View {
                 .shadow(color: .white.opacity(0.2), radius: 40, x: 0, y: 20)
             
             VStack(spacing: 20) {
-                Text("Privacy Awareness Tool")
+                Text("Analyze Your\nNetwork Activity")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
-                Text("Learn about potential privacy concerns and understand how to check for suspicious devices in your surroundings")
+                Text("Stay fully informed about nearby wireless activity to maintain complete control over digital space")
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
@@ -126,17 +139,17 @@ struct OnboardingPage2: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 240, height: 240)
-                .shadow(color: .blue.opacity(0.3), radius: 20, x: 0, y: 10)
-                .shadow(color: .blue.opacity(0.2), radius: 40, x: 0, y: 20)
+                .shadow(color: .yellow.opacity(0.3), radius: 20, x: 0, y: 10)
+                .shadow(color: .yellow.opacity(0.2), radius: 40, x: 0, y: 20)
             
             VStack(spacing: 20) {
-                Text("Educational Scanning Tools")
+                Text("Scan & Secure Your Wireless Environment")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
-                Text("Explore network connections and electromagnetic fields to understand your environment better. For educational purposes only")
+                Text("Real-time Wi-Fi & Bluetooth scanning uncovers unknown devices and boosts your privacy awareness")
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
@@ -157,17 +170,17 @@ struct OnboardingPage3: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 240, height: 240)
-                .shadow(color: .green.opacity(0.3), radius: 20, x: 0, y: 10)
-                .shadow(color: .green.opacity(0.2), radius: 40, x: 0, y: 20)
+                .shadow(color: .yellow.opacity(0.3), radius: 20, x: 0, y: 10)
+                .shadow(color: .yellow.opacity(0.2), radius: 40, x: 0, y: 20)
             
             VStack(spacing: 20) {
-                Text("Be Privacy Conscious")
+                Text("Protect Your Privacy")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                 
-                Text("Use this app as a learning tool to be more aware of your surroundings. Results are indicative only and should not replace professional security advice")
+                Text("Monitor nearby signals and connected smart devices to maintain a secure, private, and trusted environment")
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)

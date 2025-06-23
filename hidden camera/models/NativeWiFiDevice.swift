@@ -18,7 +18,6 @@ struct NativeWiFiDevice: Identifiable, Equatable, Hashable {
     }
     
     var deviceType: String {
-        // Determine device type based on services and vendor
         if services.contains(where: { $0.contains("airplay") || $0.contains("raop") }) {
             return "Apple Device"
         } else if services.contains(where: { $0.contains("printer") || $0.contains("ipp") }) {

@@ -2,8 +2,8 @@ import SwiftUI
 
 extension Color {
     static let customBackground = Color(hex: "0f1213")
-    static let customButton = Color(hex: "2ab783")
-    static let customAccent = Color(hex: "226b51")
+    static let customButton = Color(hex: "90b819")
+    static let customAccent = Color(hex: "90b819")
     static let customText = Color(hex: "f7f8ff")
 }
 

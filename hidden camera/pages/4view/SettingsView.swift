@@ -77,8 +77,8 @@ struct SettingsView: View {
                 
                 SettingsRow(
                     icon: "shield.lefthalf.filled",
-                    iconColor: .green,
-                    iconBackgroundColor: Color.green.opacity(0.2),
+                    iconColor: .yellow,
+                    iconBackgroundColor: Color.yellow.opacity(0.2),
                     title: "Privacy Policy",
                     action: {
                         if let url = URL(string: "https://www.freeprivacypolicy.com/live/d174945f-3722-403b-a62f-c0f165a8ff7a") {
@@ -108,7 +108,7 @@ struct SettingsView: View {
                 )
                 .sheet(isPresented: $showingShareSheet) {
                     ShareSheet(items: [
-                        "Check out Cam Detector - the best app to detect hidden cameras and protect your privacy! Download it here: https://apps.apple.com/app/idYOURAPPID"
+                        "Check out MTrak - your privacy protection companion! Download it here: https://apps.apple.com/app/idYOURAPPID"
                     ])
                 }
                 

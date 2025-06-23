@@ -3,7 +3,6 @@ import Foundation
 final class WiFiDevice: ObservableObject, Identifiable, Equatable, Hashable {
     let id: UUID = UUID()
     
-    // Properties that match the original LanDevice interface
     let ipAddress: String
     let hostname: String
     let brand: String
@@ -12,7 +11,6 @@ final class WiFiDevice: ObservableObject, Identifiable, Equatable, Hashable {
     
     @Published var isSecure: Bool = false
     
-    // Legacy initializer for LanDevice (if still needed during migration)
     init(ipAddress: String, hostname: String, brand: String, name: String, macAddress: String, isSecure: Bool = false) {
         self.ipAddress = ipAddress
         self.hostname = hostname
@@ -22,7 +20,6 @@ final class WiFiDevice: ObservableObject, Identifiable, Equatable, Hashable {
         self.isSecure = isSecure
     }
     
-    // New initializer for NativeWiFiDevice
     init(nativeDevice: NativeWiFiDevice) {
         self.ipAddress = nativeDevice.ipAddress
         self.hostname = nativeDevice.hostname ?? "Unknown"

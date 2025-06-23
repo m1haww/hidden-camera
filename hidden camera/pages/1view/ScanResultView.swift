@@ -26,10 +26,13 @@ struct ScanResultView: View {
                 }
         } else {
             ZStack {
-                Color.black.opacity(0.4)
+                Color.clear
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(.ultraThinMaterial)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         appProvider.showAlert = false
+                        networkScanner.progress = 0
                     }
                 
                 VStack(spacing: 20) {
@@ -37,6 +40,7 @@ struct ScanResultView: View {
                         Spacer()
                         Button {
                             appProvider.showAlert = false
+                        networkScanner.progress = 0
                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .imageScale(.large)
@@ -69,10 +73,9 @@ struct ScanResultView: View {
                     HStack(spacing: 15) {
                         VStack(alignment: .leading, spacing: 5) {
                             HStack {
-                                Image("shield")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 35, height: 35)
+                                Image(systemName: "checkmark.shield.fill")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.green)
                                 Spacer()
                                 Text("\(secureDevices)")
                                     .font(.title2)
@@ -89,10 +92,9 @@ struct ScanResultView: View {
                         
                         VStack(alignment: .leading, spacing: 5) {
                             HStack {
-                                Image("warning")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 35, height: 35)
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.red)
                                 Spacer()
                                 Text("\(suspiciousDevices)")
                                     .font(.title2)
@@ -110,36 +112,40 @@ struct ScanResultView: View {
                     
                     Button {
                         appProvider.showAlert = false
+                        networkScanner.progress = 0
                         appProvider.navigationPath.append(NavigationDestination.scanResultDetail)
                     } label: {
                         Text("See scanning result")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(.black)
+                            .padding(.vertical, 16)
                             .frame(maxWidth: .infinity)
                             .background(Color.customButton)
-                            .cornerRadius(8)
+                            .cornerRadius(25)
                     }
                     
                     Button {
                         appProvider.showAlert = false
+                        // Ensure progress is reset
+                        networkScanner.progress = 0
                     } label: {
                         Text("Cancel")
-                            .font(.headline)
-                            .foregroundColor(.customButton)
-                            .padding()
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(Color.customButton)
+                            .padding(.vertical, 16)
                             .frame(maxWidth: .infinity)
                             .background(Color.clear)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.customButton, lineWidth: 1)
+                                RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.customButton, lineWidth: 2)
                             )
                     }
                 }
-                .padding()
-                .background(Color.customBackground)
-                .cornerRadius(20)
                 .padding(25)
+                .background(Color.customBackground)
+                .cornerRadius(25)
+                .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
+                .padding(.horizontal, 20)
             }
         }
     }

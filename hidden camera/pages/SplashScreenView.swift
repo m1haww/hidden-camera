@@ -34,7 +34,7 @@ struct SplashScreenView: View {
                         .font(.system(size: 36, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                     
-                    Text("Cam Detector")
+                    Text("Privacy Scanner")
                         .font(.system(size: 24, weight: .medium, design: .rounded))
                         .foregroundColor(.accentColor)
                 }
@@ -92,6 +92,8 @@ struct SplashScreenView: View {
         }
         .task {
             await deviceInfoProvider.fetchIPInfo()
+            // Load scan history
+            ScanHistoryManager.shared.loadHistory()
         }
     }
 }

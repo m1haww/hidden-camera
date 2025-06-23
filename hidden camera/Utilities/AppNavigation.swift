@@ -7,4 +7,6 @@ enum NavigationDestination: Hashable {
     case bluetoothDeviceDetail(device: Peripheral)
     case blinkingScanner
     case compassVisualDetail
+    case scanHistory
+    case wifiBluetoothScanner
 }

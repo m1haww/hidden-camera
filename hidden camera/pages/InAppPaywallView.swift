@@ -83,29 +83,23 @@ struct InAppPaywallView: View {
                 
                 Spacer().frame(height: 30)
                 
-                // Camera icon with exclamation mark
+                // App icon or scanner icon
                 ZStack {
                     RoundedRectangle(cornerRadius: 30)
-                        .fill(Color.black)
+                        .fill(LinearGradient(
+                            gradient: Gradient(colors: [Color.accentColor, Color.accentColor.opacity(0.8)]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ))
                         .frame(width: 120, height: 120)
-                        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
+                        .shadow(color: Color.accentColor.opacity(0.3), radius: 20, x: 0, y: 10)
                     
-                    Image("camera")
+                    Image(systemName: "antenna.radiowaves.left.and.right")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 70, height: 70)
+                        .frame(width: 60, height: 60)
                         .foregroundColor(.white)
-                    
-                    ZStack {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 32, height: 32)
-                        
-                        Text("!")
-                            .font(.system(size: 22, weight: .bold))
-                            .foregroundColor(.white)
-                    }
-                    .offset(x: 42, y: 42)
+                        .symbolRenderingMode(.hierarchical)
                 }
                 
                 Spacer().frame(height: 30)
@@ -127,12 +121,10 @@ struct InAppPaywallView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .padding(.vertical, 50)
                     } else {
-                        // Display packages based on free trial toggle
                         let weeklyId = freeTrialEnabled ? "weekly-trial" : "weekly"
                         let monthlyId = freeTrialEnabled ? "monthly-trial" : "monthly"
                         let yearlyId = freeTrialEnabled ? "yearly-trial" : "yearly"
                         
-                        // Weekly package
                         if let weeklyPackage = availablePackages.first(where: { $0.identifier == weeklyId }) {
                             PackageOptionView(
                                 package: weeklyPackage,
@@ -143,7 +135,6 @@ struct InAppPaywallView: View {
                             }
                         }
                         
-                        // Monthly package
                         if let monthlyPackage = availablePackages.first(where: { $0.identifier == monthlyId }) {
                             PackageOptionView(
                                 package: monthlyPackage,

@@ -14,6 +14,14 @@ final class NetworkScanner: ObservableObject {
         setupBindings()
     }
     
+    struct NetworkDevice {
+        let ipAddress: String
+        let hostname: String?
+        let macAddress: String?
+        let macVendor: String?
+        let isReachable: Bool
+    }
+    
     @Published var connectedDevices = [WiFiDevice]()
     @Published var progress: CGFloat = .zero
     
@@ -22,7 +30,6 @@ final class NetworkScanner: ObservableObject {
     @Published var isScanning: Bool = false
     
     private func setupBindings() {
-        // Observe changes from native scanner
         nativeScanner.$connectedDevices
             .receive(on: DispatchQueue.main)
             .sink { [weak self] nativeDevices in
