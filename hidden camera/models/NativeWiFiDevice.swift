@@ -45,7 +45,6 @@ struct NativeWiFiDevice: Identifiable, Equatable, Hashable {
             return true
         }
         
-        // Check if it's a router (typically .1 address)
         if ipAddress.hasSuffix(".1") || ipAddress.hasPrefix("192") {
             return true
         }

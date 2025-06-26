@@ -13,9 +13,7 @@ struct InAppPaywallView: View {
         ZStack {
             Color.customBackground.ignoresSafeArea()
             
-            // Background decorative elements
             ZStack {
-                // Top left decoration
                 Image(systemName: "antenna.radiowaves.left.and.right")
                     .font(.system(size: 80))
                     .foregroundColor(Color.accentColor.opacity(0.08))
@@ -23,7 +21,6 @@ struct InAppPaywallView: View {
                     .offset(x: -120, y: -280)
                     .blur(radius: 3)
                 
-                // Top right decoration
                 Image(systemName: "wifi")
                     .font(.system(size: 60))
                     .foregroundColor(Color.accentColor.opacity(0.06))
@@ -31,7 +28,6 @@ struct InAppPaywallView: View {
                     .offset(x: 140, y: -250)
                     .blur(radius: 2)
                 
-                // Middle left decoration
                 Image(systemName: "dot.radiowaves.left.and.right")
                     .font(.system(size: 50))
                     .foregroundColor(Color.accentColor.opacity(0.05))
@@ -39,7 +35,6 @@ struct InAppPaywallView: View {
                     .offset(x: -130, y: 50)
                     .blur(radius: 2)
                 
-                // Middle right decoration
                 Image(systemName: "sensor.tag.radiowaves.forward")
                     .font(.system(size: 70))
                     .foregroundColor(Color.accentColor.opacity(0.07))
@@ -47,7 +42,6 @@ struct InAppPaywallView: View {
                     .offset(x: 150, y: 100)
                     .blur(radius: 3)
                 
-                // Bottom left decoration
                 Image(systemName: "wave.3.left")
                     .font(.system(size: 45))
                     .foregroundColor(Color.accentColor.opacity(0.06))
@@ -55,7 +49,6 @@ struct InAppPaywallView: View {
                     .offset(x: -140, y: 280)
                     .blur(radius: 2)
                 
-                // Bottom right decoration
                 Image(systemName: "antenna.radiowaves.left.and.right")
                     .font(.system(size: 55))
                     .foregroundColor(Color.accentColor.opacity(0.05))
@@ -83,7 +76,6 @@ struct InAppPaywallView: View {
                 
                 Spacer().frame(height: 30)
                 
-                // App icon or scanner icon
                 ZStack {
                     RoundedRectangle(cornerRadius: 30)
                         .fill(LinearGradient(
@@ -114,7 +106,6 @@ struct InAppPaywallView: View {
                 
                 Spacer().frame(height: 30)
                 
-                // Package selection
                 VStack(spacing: 0) {
                     if isLoading {
                         ProgressView()
@@ -145,7 +136,6 @@ struct InAppPaywallView: View {
                             }
                         }
                         
-                        // Yearly package
                         if let yearlyPackage = availablePackages.first(where: { $0.identifier == yearlyId }) {
                             PackageOptionView(
                                 package: yearlyPackage,

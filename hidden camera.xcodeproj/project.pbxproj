@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		811D8A3A2DF00BBC00BCCD28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 811D8A392DF00BBC00BCCD28 /* RevenueCat */; };
 		811D8A3C2DF00BBC00BCCD28 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 811D8A3B2DF00BBC00BCCD28 /* RevenueCatUI */; };
-		8174204B2E09C3940096B6BF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8174204A2E09C3940096B6BF /* StoreKit.framework */; };
+		81BBBDA72E0DB6D30066A082 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BBBDA62E0DB6D30066A082 /* StoreKit.framework */; };
 		D5FF35AFFB771D133F4AC679 /* Pods_hidden_camera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE149BD7A6BE9E4C5638282 /* Pods_hidden_camera.framework */; };
 /* End PBXBuildFile section */
 
@@ -17,7 +17,7 @@
 		0DE149BD7A6BE9E4C5638282 /* Pods_hidden_camera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_hidden_camera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CC3B891D9BFAB3A740DC7D4 /* Pods-hidden camera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hidden camera.release.xcconfig"; path = "Target Support Files/Pods-hidden camera/Pods-hidden camera.release.xcconfig"; sourceTree = "<group>"; };
 		5CA2485E2DE867E900CEB5F0 /* hidden camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hidden camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8174204A2E09C3940096B6BF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		81BBBDA62E0DB6D30066A082 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C6172D927333103988EB5423 /* Pods-hidden camera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hidden camera.debug.xcconfig"; path = "Target Support Files/Pods-hidden camera/Pods-hidden camera.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -37,7 +37,7 @@
 				811D8A3C2DF00BBC00BCCD28 /* RevenueCatUI in Frameworks */,
 				D5FF35AFFB771D133F4AC679 /* Pods_hidden_camera.framework in Frameworks */,
 				811D8A3A2DF00BBC00BCCD28 /* RevenueCat in Frameworks */,
-				8174204B2E09C3940096B6BF /* StoreKit.framework in Frameworks */,
+				81BBBDA72E0DB6D30066A082 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,7 +47,7 @@
 		4ACFFB9FAB1F80976AA3F97D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8174204A2E09C3940096B6BF /* StoreKit.framework */,
+				81BBBDA62E0DB6D30066A082 /* StoreKit.framework */,
 				0DE149BD7A6BE9E4C5638282 /* Pods_hidden_camera.framework */,
 			);
 			name = Frameworks;
@@ -317,7 +317,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"hidden camera/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
@@ -338,7 +338,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mary.hidden.camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -354,7 +354,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"hidden camera/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
@@ -375,7 +375,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mary.hidden.camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

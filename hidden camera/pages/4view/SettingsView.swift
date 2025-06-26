@@ -108,7 +108,7 @@ struct SettingsView: View {
                 )
                 .sheet(isPresented: $showingShareSheet) {
                     ShareSheet(items: [
-                        "Check out MTrak - your privacy protection companion! Download it here: https://apps.apple.com/app/idYOURAPPID"
+                        "Check out MTrak - your privacy protection companion! Download it here: https://apps.apple.com/us/app/mtrak-privacy-scan-tool/id6746871352?platform=iphone"
                     ])
                 }
                 
