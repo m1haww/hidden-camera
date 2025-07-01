@@ -24,7 +24,7 @@ struct ThirdView: View {
                     icon: "tree.fill",
                     iconColor: .customButton,
                     title: "Outdoor Places",
-                    description: "Surveillance devices may be concealed in outdoor areas such as trees, fences, or public fixtures. Discover typical hiding methods and how to spot these devices during your inspection",
+                    description: "Explore outdoor spaces including landscaping, furniture, and architectural features. Learn about materials, maintenance, and design elements commonly found in exterior environments.",
                     isPremium: false,
                     action: {
                         showOutdoorGuide = true
