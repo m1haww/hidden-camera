@@ -1,5 +1,4 @@
 import SwiftUI
-import StoreKit
 import RevenueCatUI
 import RevenueCat
 
@@ -188,13 +187,6 @@ struct OnboardingPage3: View {
             }
             
             Spacer()
-        }
-        .onAppear {
-            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    SKStoreReviewController.requestReview(in: scene)
-                }
-            }
         }
     }
 }
