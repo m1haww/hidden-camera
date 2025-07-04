@@ -58,21 +58,31 @@ struct InAppPaywallView: View {
             }
             
             VStack(spacing: 0) {
-                HStack {
-                    Button(action: {
-                        appProvider.showPaywall = false
-                    }) {
-                       Image(systemName: "xmark")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 15, height: 15)
-                            .foregroundStyle(.white.opacity(0.5))
+                ZStack {
+                    HStack {
+                        Button(action: {
+                            appProvider.showPaywall = false
+                        }) {
+                           Image(systemName: "xmark")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 15, height: 15)
+                                .foregroundStyle(.white.opacity(0.5))
+                        }
+                        .padding(.leading, 20)
+                        
+                        Spacer()
                     }
-                    .padding(.leading, 20)
-                    .padding(.top, 60)
                     
-                    Spacer()
+                    Button(action: {
+                        restore()
+                    }) {
+                        Text("Restore")
+                            .font(.system(size: 17, weight: .medium))
+                            .foregroundColor(.white.opacity(0.8))
+                    }
                 }
+                .padding(.top, 60)
                 
                 Spacer().frame(height: 30)
                 
@@ -112,9 +122,9 @@ struct InAppPaywallView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .padding(.vertical, 50)
                     } else {
-                        let weeklyId = freeTrialEnabled ? "weekly-trial" : "weekly"
-                        let monthlyId = freeTrialEnabled ? "monthly-trial" : "monthly"
-                        let yearlyId = freeTrialEnabled ? "yearly-trial" : "yearly"
+                        let weeklyId = freeTrialEnabled ? "weekly.trial" : "weekly"
+                        let monthlyId = freeTrialEnabled ? "monthly.trial" : "monthly"
+                        let yearlyId = freeTrialEnabled ? "yearly.trial" : "yearly"
                         
                         if let weeklyPackage = availablePackages.first(where: { $0.identifier == weeklyId }) {
                             PackageOptionView(
@@ -190,12 +200,6 @@ struct InAppPaywallView: View {
                     .padding(.top, 10)
                     
                     HStack(spacing: 40) {
-                        Button("Restore") {
-                            restore()
-                        }
-                        .font(.system(size: 14))
-                        .foregroundColor(.gray)
-                        
                         Button("Privacy") {
                             if let url = URL(string: "https://www.freeprivacypolicy.com/live/d174945f-3722-403b-a62f-c0f165a8ff7a") {
                                 UIApplication.shared.open(url)
@@ -226,7 +230,6 @@ struct InAppPaywallView: View {
         Purchases.shared.getOfferings { offerings, error in
             if let packages = offerings?.all["in-app"]?.availablePackages {
                 self.availablePackages = packages
-                // Set initial selection based on free trial state
                 updateSelectedPackage()
             }
             self.isLoading = false
@@ -234,14 +237,12 @@ struct InAppPaywallView: View {
     }
     
     private func updateSelectedPackage() {
-        // Update selected package when toggling free trial
         if let currentSelected = selectedPackage {
             let currentType = getPackageType(from: currentSelected.identifier)
-            let newIdentifier = freeTrialEnabled ? "\(currentType)-trial" : currentType
+            let newIdentifier = freeTrialEnabled ? "\(currentType).trial" : currentType
             selectedPackage = availablePackages.first { $0.identifier == newIdentifier }
         } else {
-            // Default to weekly if no selection
-            let weeklyId = freeTrialEnabled ? "weekly-trial" : "weekly"
+            let weeklyId = freeTrialEnabled ? "weekly.trial" : "weekly"
             selectedPackage = availablePackages.first { $0.identifier == weeklyId }
         }
     }

@@ -43,16 +43,3 @@ struct FeatureCard: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
-
-#Preview {
-    FeatureCard(
-        icon: "eye.trianglebadge.exclamationmark",
-        iconColor: .blue,
-        title: "Sample Feature",
-        description: "This is a sample description for the feature card component",
-        isPremium: false,
-        action: {}
-    )
-    .padding()
-    .background(Color.black)
-}
