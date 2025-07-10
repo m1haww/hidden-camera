@@ -38,13 +38,3 @@ struct ScanningProgressView: View {
         }
     }
 }
-
-#Preview {
-    ScanningProgressView(
-        progress: 0.75,
-        isScanning: true,
-        iconName: "searchicon"
-    )
-    .padding()
-    .background(Color.black)
-}

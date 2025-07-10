@@ -8,6 +8,9 @@ struct InAppPaywallView: View {
     @State private var availablePackages: [Package] = []
     @State private var isLoading = true
     @State private var freeTrialEnabled = false
+    @State private var isTrialEligible = false
+    @State private var eligibilityChecked = false
+    @State private var hasTrialProducts = false
     
     var body: some View {
         ZStack {
@@ -122,15 +125,18 @@ struct InAppPaywallView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                             .padding(.vertical, 50)
                     } else {
-                        let weeklyId = freeTrialEnabled ? "weekly.trial" : "weekly"
-                        let monthlyId = freeTrialEnabled ? "monthly.trial" : "monthly"
-                        let yearlyId = freeTrialEnabled ? "yearly.trial" : "yearly"
+                        // Determine which package IDs to use based on trial availability
+                        let useTrialPackages = freeTrialEnabled && hasTrialProducts && isTrialEligible
+                        let weeklyId = useTrialPackages ? "weekly.trial" : "weekly"
+                        let monthlyId = useTrialPackages ? "monthly.trial" : "monthly"
+                        let yearlyId = useTrialPackages ? "yearly.trial" : "yearly"
                         
                         if let weeklyPackage = availablePackages.first(where: { $0.identifier == weeklyId }) {
                             PackageOptionView(
                                 package: weeklyPackage,
                                 isSelected: selectedPackage?.identifier == weeklyPackage.identifier,
-                                freeTrialEnabled: freeTrialEnabled
+                                freeTrialEnabled: freeTrialEnabled && hasTrialProducts,
+                                isTrialEligible: isTrialEligible
                             ) {
                                 selectedPackage = weeklyPackage
                             }
@@ -140,7 +146,8 @@ struct InAppPaywallView: View {
                             PackageOptionView(
                                 package: monthlyPackage,
                                 isSelected: selectedPackage?.identifier == monthlyPackage.identifier,
-                                freeTrialEnabled: freeTrialEnabled
+                                freeTrialEnabled: freeTrialEnabled && hasTrialProducts,
+                                isTrialEligible: isTrialEligible
                             ) {
                                 selectedPackage = monthlyPackage
                             }
@@ -150,31 +157,35 @@ struct InAppPaywallView: View {
                             PackageOptionView(
                                 package: yearlyPackage,
                                 isSelected: selectedPackage?.identifier == yearlyPackage.identifier,
-                                freeTrialEnabled: freeTrialEnabled
+                                freeTrialEnabled: freeTrialEnabled && hasTrialProducts,
+                                isTrialEligible: isTrialEligible
                             ) {
                                 selectedPackage = yearlyPackage
                             }
                         }
                         
-                        HStack {
-                            Text("Free Trial")
-                                .font(.system(size: 17, weight: .medium))
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                            
-                            Toggle("", isOn: $freeTrialEnabled)
-                                .tint(Color.accentColor)
-                                .onChange(of: freeTrialEnabled) { _ in
-                                    updateSelectedPackage()
-                                }
+                        if isTrialEligible && hasTrialProducts {
+                            HStack {
+                                Text("Free Trial")
+                                    .font(.system(size: 17, weight: .medium))
+                                    .foregroundColor(.white)
+                                
+                                Spacer()
+                                
+                                Toggle("", isOn: $freeTrialEnabled)
+                                    .tint(Color.accentColor)
+                                    .disabled(!isTrialEligible || !hasTrialProducts)
+                                    .onChange(of: freeTrialEnabled) { _ in
+                                        updateSelectedPackage()
+                                    }
+                            }
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 18)
+                            .background(Color.white.opacity(0.1))
+                            .cornerRadius(16)
+                            .padding(.horizontal, 20)
+                            .padding(.top, 20)
                         }
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 18)
-                        .background(Color.white.opacity(0.1))
-                        .cornerRadius(16)
-                        .padding(.horizontal, 20)
-                        .padding(.top, 20)
                     }
                 }
                 
@@ -227,23 +238,76 @@ struct InAppPaywallView: View {
     }
     
     private func loadOfferings() {
+        checkTrialEligibility()
+        
         Purchases.shared.getOfferings { offerings, error in
             if let packages = offerings?.all["in-app"]?.availablePackages {
                 self.availablePackages = packages
+                
+                self.hasTrialProducts = packages.contains { package in
+                    if package.identifier.contains(".trial") {
+                        if let product = package.storeProduct.sk1Product {
+                            return product.introductoryPrice != nil
+                        } else if let product = package.storeProduct.sk2Product {
+                            return product.subscription?.introductoryOffer != nil
+                        }
+                    }
+                    return false
+                }
+                
+                if !self.hasTrialProducts {
+                    self.freeTrialEnabled = false
+                }
+                
                 updateSelectedPackage()
             }
             self.isLoading = false
         }
     }
     
+    private func checkTrialEligibility() {
+        Purchases.shared.getCustomerInfo { customerInfo, error in
+            if let customerInfo = customerInfo {
+                let hasAnyPurchaseHistory = !customerInfo.allPurchasedProductIdentifiers.isEmpty
+                let hasAnySubscriptionHistory = !customerInfo.activeSubscriptions.isEmpty || 
+                                               customerInfo.latestExpirationDate != nil
+                
+                self.isTrialEligible = !hasAnyPurchaseHistory && !hasAnySubscriptionHistory
+                
+                if !self.isTrialEligible {
+                    self.freeTrialEnabled = false
+                } else if self.hasTrialProducts {
+                    self.freeTrialEnabled = true
+                } else {
+                    self.freeTrialEnabled = false
+                }
+                
+                self.eligibilityChecked = true
+                updateSelectedPackage()
+            }
+        }
+    }
+    
     private func updateSelectedPackage() {
+        let useTrialPackages = freeTrialEnabled && hasTrialProducts && isTrialEligible
+        
         if let currentSelected = selectedPackage {
             let currentType = getPackageType(from: currentSelected.identifier)
-            let newIdentifier = freeTrialEnabled ? "\(currentType).trial" : currentType
-            selectedPackage = availablePackages.first { $0.identifier == newIdentifier }
+            let newIdentifier = useTrialPackages ? "\(currentType).trial" : currentType
+            
+            // Try to find the new package, fallback to non-trial if trial doesn't exist
+            if let newPackage = availablePackages.first(where: { $0.identifier == newIdentifier }) {
+                selectedPackage = newPackage
+            } else if useTrialPackages {
+                // Fallback to non-trial version if trial package doesn't exist
+                selectedPackage = availablePackages.first { $0.identifier == currentType }
+            }
         } else {
-            let weeklyId = freeTrialEnabled ? "weekly.trial" : "weekly"
+            // Default selection
+            let weeklyId = useTrialPackages ? "weekly.trial" : "weekly"
             selectedPackage = availablePackages.first { $0.identifier == weeklyId }
+                ?? availablePackages.first { $0.identifier == "weekly" }
+                ?? availablePackages.first
         }
     }
     
@@ -301,7 +365,17 @@ struct PackageOptionView: View {
     let package: Package
     let isSelected: Bool
     let freeTrialEnabled: Bool
+    let isTrialEligible: Bool
     let action: () -> Void
+    
+    var hasIntroOffer: Bool {
+        if let product = package.storeProduct.sk1Product {
+            return product.introductoryPrice != nil
+        } else if let product = package.storeProduct.sk2Product {
+            return product.subscription?.introductoryOffer != nil
+        }
+        return false
+    }
     
     var periodText: String {
         if package.identifier.contains("weekly") {
@@ -339,7 +413,7 @@ struct PackageOptionView: View {
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundColor(.white)
                         
-                        Text(freeTrialEnabled ? "3-Days Free Trial" : "Get a Plan")
+                        Text(freeTrialEnabled && isTrialEligible && hasIntroOffer ? "3-Days Free Trial" : "Get a Plan")
                             .font(.system(size: 14))
                             .foregroundColor(Color.white.opacity(0.6))
                     }
