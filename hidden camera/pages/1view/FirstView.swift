@@ -26,7 +26,11 @@ struct FirstView: View {
                                     if appProvider.isPremiumUser {
                                         appProvider.navigationPath.append(NavigationDestination.wifiBluetoothScanner)
                                     } else {
-                                        appProvider.showPaywall = true
+                                        if appProvider.hasExpiredTrial {
+                                            appProvider.showPaywall = true
+                                        } else {
+                                            appProvider.showOnboardingPaywall = true
+                                        }
                                     }
                                 }
                             )
@@ -39,7 +43,11 @@ struct FirstView: View {
                                     if appProvider.isPremiumUser {
                                         appProvider.navigationPath.append(NavigationDestination.compassVisualDetail)
                                     } else {
-                                        appProvider.showPaywall = true
+                                        if appProvider.hasExpiredTrial {
+                                            appProvider.showPaywall = true
+                                        } else {
+                                            appProvider.showOnboardingPaywall = true
+                                        }
                                     }
                                 }
                             )
@@ -54,7 +62,11 @@ struct FirstView: View {
                                     if appProvider.isPremiumUser {
                                         appProvider.navigationPath.append(NavigationDestination.blinkingScanner)
                                     } else {
-                                        appProvider.showPaywall = true
+                                        if appProvider.hasExpiredTrial {
+                                            appProvider.showPaywall = true
+                                        } else {
+                                            appProvider.showOnboardingPaywall = true
+                                        }
                                     }
                                 }
                             )

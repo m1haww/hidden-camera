@@ -15,7 +15,11 @@ struct SettingsView: View {
                 if !appProvider.isPremiumUser {
                     Button(action: {
                         withAnimation {
-                            appProvider.showPaywall = true
+                            if appProvider.hasExpiredTrial {
+                                appProvider.showPaywall = true
+                            } else {
+                                appProvider.showOnboardingPaywall = true
+                            }
                         }
                     }) {
                         HStack {

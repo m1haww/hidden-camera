@@ -20,7 +20,11 @@ struct SecondView: View {
                                 appProvider.navigationPath.append(NavigationDestination.blinkingScanner)
                             } else {
                                 withAnimation {
-                                    appProvider.showPaywall = true
+                                    if appProvider.hasExpiredTrial {
+                                        appProvider.showPaywall = true
+                                    } else {
+                                        appProvider.showOnboardingPaywall = true
+                                    }
                                 }
                             }
                         }
@@ -37,7 +41,11 @@ struct SecondView: View {
                                 appProvider.navigationPath.append(NavigationDestination.compassVisualDetail)
                             } else {
                                 withAnimation {
-                                    appProvider.showPaywall = true
+                                    if appProvider.hasExpiredTrial {
+                                        appProvider.showPaywall = true
+                                    } else {
+                                        appProvider.showOnboardingPaywall = true
+                                    }
                                 }
                             }
                         }

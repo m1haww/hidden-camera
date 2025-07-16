@@ -58,7 +58,11 @@ extension View {
             action()
         } else {
             withAnimation {
-                appProvider.showPaywall = true
+                if appProvider.hasExpiredTrial {
+                    appProvider.showPaywall = true
+                } else {
+                    appProvider.showOnboardingPaywall = true
+                }
             }
         }
     }

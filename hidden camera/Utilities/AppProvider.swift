@@ -17,10 +17,20 @@ final class AppProvider: ObservableObject {
     @Published var isOnboardingComplete: Bool = false
     @Published var isPremiumUser: Bool = false
     
+    @Published var hasExpiredTrial: Bool = false
+    
     func loadConfige() {
         loadOnboardingStatus()
         Purchases.shared.getCustomerInfo { (customerInfo, error) in
             self.isPremiumUser = customerInfo?.entitlements.all["pro"]?.isActive == true
+            
+            if let entitlement = customerInfo?.entitlements.all["pro"] {
+                if let expirationDate = entitlement.expirationDate {
+                    if expirationDate < Date() {
+                        self.hasExpiredTrial = true
+                    }
+                }
+            }
         }
     }
     
